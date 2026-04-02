@@ -78,7 +78,7 @@ public class EnvManager : Singleton<EnvManager>
         var composer = rightVcam.GetComponent<CinemachineFollow>();
         composer.FollowOffset = rightOriginOffset;
         Vector3 startOffset = composer.FollowOffset;
-        Vector3 targetOffset = startOffset + leftChangeOffset;
+        Vector3 targetOffset = startOffset + rightChangeOffset;
 
         float elapsed = 0f;
         while (elapsed < time)

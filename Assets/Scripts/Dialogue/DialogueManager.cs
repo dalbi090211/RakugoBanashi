@@ -17,24 +17,19 @@ public class DialogueManager : Singleton<DialogueManager>
 
     // ── References ───────────────────────────────────────────────
     [SerializeField] private GameObject talkUI;
-    [SerializeField] private GameObject textBoxPrefab;
     [SerializeField] private ButtonMapper titleManager;
-    [SerializeField] private TextMeshPro leftTextBox;
-    [SerializeField] private TextMeshPro rightTextBox;
+    [SerializeField] private TextBox leftTextBox;
+    [SerializeField] private TextBox rightTextBox;
 
     // ── 설정 ─────────────────────────────────────────────────────
-    [Header("텍스트 박스 위치")]
-    [SerializeField] private float textBoxOffsetY = 1.5f;
-
     [Header("딜레이")]
-    [SerializeField] private float setBoxDelay = 0.1f;
-    [SerializeField] private float boxFadingDelay = 0.5f;
+    [SerializeField] private float textShowDelay = 0.7f;
 
     // ── 런타임 상태 ───────────────────────────────────────────────
     private DialogueData curTalkData;
     private DialogueData appendData;
-    private GameObject curTextBoxObj;
     private bool eventLock;
+    private bool curLeft = false;
     private EventCommandInvoker eventCommandInvoker = new EventCommandInvoker();
 
     // ─────────────────────────────────────────────────────────────
@@ -77,13 +72,26 @@ public class DialogueManager : Singleton<DialogueManager>
     {
         if (!eventLock) return;
 
-        bool isDone = curTextBoxObj != null &&
-                      curTextBoxObj.GetComponent<TextBox>().Skip();
+        bool isDone;
+        if (curLeft)
+        {
+            isDone = leftTextBox.Skip();
+        }
+        else
+        {
+            isDone = rightTextBox.Skip();
+        }
 
         if (isDone)
         {
-            Destroy(curTextBoxObj);
-            curTextBoxObj = null;
+            if (curLeft)
+            {
+                leftTextBox.Hide();
+            }
+            else
+            {
+                rightTextBox.Hide();
+            }
             eventLock = false;
         }
     }
@@ -104,10 +112,24 @@ public class DialogueManager : Singleton<DialogueManager>
             {
                 case eventType.Dial:
                     var dialogue = ev as Dialogue;
-                    await CreateTalkBoxRoutine(dialogue);
-                    if (dialogue.isLeft) EnvManager.Instance.SetLeftVCam(1f).Forget();
-                    else EnvManager.Instance.SetRightVCam(1f).Forget();
-                    await UniTask.Delay(TimeSpan.FromSeconds(boxFadingDelay));
+                    eventLock = dialogue.checkInput;
+                    curLeft = dialogue.isLeft;
+
+                    TextBoxData data = BuildTextBoxData(dialogue.Text);
+
+                    if (dialogue.isLeft)
+                    {
+                        rightTextBox.Hide();
+                        EnvManager.Instance.SetLeftVCam(1f).Forget();
+                        await leftTextBox.Init(data);
+                    }
+                    else
+                    {
+                        leftTextBox.Hide();
+                        EnvManager.Instance.SetRightVCam(1f).Forget();
+                        await rightTextBox.Init(data);
+                    }
+                    await UniTask.Delay(TimeSpan.FromSeconds(textShowDelay));
                     SkipText();
                     break;
 
@@ -133,7 +155,7 @@ public class DialogueManager : Singleton<DialogueManager>
             appendData = null;
             await TimeLineEvent();
         }
-
+        EnvManager.Instance.SetMiddleVCam(1f).Forget();
         CleanUp();
     }
 
@@ -141,54 +163,6 @@ public class DialogueManager : Singleton<DialogueManager>
 
     // ─────────────────────────────────────────────────────────────
     #region TextBox 생성
-
-    private async UniTask CreateTalkBoxRoutine(Dialogue dialogue)
-    {
-        eventLock = dialogue.checkInput;
-        await UniTask.Delay(TimeSpan.FromSeconds(setBoxDelay));
-        await CreateTalkBox(dialogue);
-    }
-
-    private async UniTask CreateTalkBox(Dialogue dialogue)
-    {
-        // 이전 텍스트박스 정리
-        if (curTextBoxObj != null)
-            Destroy(curTextBoxObj);
-
-        curTextBoxObj = Instantiate(textBoxPrefab, Vector3.zero, Quaternion.identity,
-                                    talkUI.transform);
-
-        Vector2 uiPos = GetUIPosition(dialogue.TextTarget);
-        TextBoxData data = BuildTextBoxData(dialogue.Text);
-        await curTextBoxObj.GetComponent<TextBox>().Init(uiPos, data);
-    }
-
-    /// <summary>
-    /// 월드 오브젝트 머리 위 → Canvas anchoredPosition 변환
-    /// CameraManager 없이 Camera.main 직접 사용
-    /// </summary>
-    private Vector2 GetUIPosition(GameObject target)
-    {
-        float topY = target.transform.position.y;
-        var sr = target.GetComponent<SpriteRenderer>();
-        if (sr != null && sr.sprite != null)
-            topY = sr.bounds.max.y;
-
-        Vector3 worldPos = target.transform.position;
-        worldPos.y = topY + textBoxOffsetY;
-
-        Vector2 viewportPoint = Camera.main.WorldToViewportPoint(worldPos);
-        viewportPoint.x = Mathf.Clamp01(viewportPoint.x);
-        viewportPoint.y = Mathf.Clamp01(viewportPoint.y);
-
-        var canvasRect = talkUI.GetComponent<Canvas>().GetComponent<RectTransform>();
-        Vector2 canvasSize = canvasRect.sizeDelta;
-
-        return new Vector2(
-            (viewportPoint.x - 0.5f) * canvasSize.x,
-            (viewportPoint.y - 0.5f) * canvasSize.y
-        );
-    }
 
     /// <summary>
     /// 텍스트 → TextBoxData 변환
@@ -244,7 +218,6 @@ public class DialogueManager : Singleton<DialogueManager>
     private void CleanUp()
     {
         curTalkData = null;
-        curTextBoxObj = null;
         eventLock = false;
     }
 

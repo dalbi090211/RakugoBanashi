@@ -13,26 +13,12 @@ using Random = UnityEngine.Random;
 public class TextBox : MonoBehaviour
 {
     // ── 박스 레이아웃 ────────────────────────────────────────────
-    [SerializeField] private RectTransform uiRect;
     [SerializeField] private float maxWidth = 600f;
 
-    [Header("박스 여백")]
-    [SerializeField] private float marginX = 10f;
-    [SerializeField] private float marginY = 5f;
-
-    [Header("말풍선 오브젝트")]
-    [SerializeField] private RectTransform leftBox;
-    [SerializeField] private RectTransform leftBorderBox;
-    [SerializeField] private RectTransform middleBox;       // 텍스트 너비에 맞게 stretch
-    [SerializeField] private RectTransform rightBorderBox;
-    [SerializeField] private RectTransform rightBox;
-
     // ── TMP ──────────────────────────────────────────────────────
-    [SerializeField] private TextMeshProUGUI textBox;
-    private ContentSizeFitter textFitter;
+    [SerializeField] private TextMeshPro textBox;
     private TMP_TextInfo textInfo;
     private Vector3[][] originalVertices;
-    private Color32[][] newVertexColors;
 
     // ── 출력 설정 ─────────────────────────────────────────────────
     [Header("출력 속도")]
@@ -67,8 +53,6 @@ public class TextBox : MonoBehaviour
 
     private void Awake()
     {
-        if (uiRect == null) uiRect = GetComponent<RectTransform>();
-        textFitter = textBox.GetComponent<ContentSizeFitter>();
     }
 
     private void OnDestroy() => CancelAll();
@@ -78,22 +62,25 @@ public class TextBox : MonoBehaviour
     // ─────────────────────────────────────────────────────────────
     #region Public API
 
-    public async UniTask Init(Vector2 position, TextBoxData data)
+    public async UniTask Init(TextBoxData data)
     {
+        textBox.text = "";
         CancelAll();
         ResetCTS();
 
         curData = data;
         curIndex = 0;
-
-        SetBoxVisible(true);
         ApplyText(data.parsedText);
-        ResizeBox();
-        uiRect.anchoredPosition = position;
 
         SetupMeshCache();
         RenderLoop().Forget();
         await PlayTextAnim();
+    }
+
+    public void Hide()
+    {
+        CancelAll();
+        textBox.text = "";
     }
 
     public bool Skip()
@@ -117,61 +104,15 @@ public class TextBox : MonoBehaviour
     private void ApplyText(string text)
     {
         textBox.text = text;
-        textBox.margin = new Vector4(marginX / 2, marginY / 2, marginX / 2, marginY / 2);
-        textBox.ForceMeshUpdate();
 
-        var textRect = textBox.GetComponent<RectTransform>();
-        float w = textBox.preferredWidth;
-        float h = textBox.preferredHeight;
-
-        if (w < maxWidth)
-        {
-            if (textFitter != null) textFitter.enabled = false;
-            textRect.sizeDelta = new Vector2(w, h);
-            textBox.textWrappingMode = TextWrappingModes.NoWrap;
-        }
-        else
-        {
-            if (textFitter != null) textFitter.enabled = true;
-            textRect.sizeDelta = new Vector2(maxWidth, 0);
+        // maxWidth 넘으면 줄바꿈, 아니면 한 줄
+        if (textBox.preferredWidth > maxWidth)
             textBox.textWrappingMode = TextWrappingModes.Normal;
-            textBox.ForceMeshUpdate();
-        }
+        else
+            textBox.textWrappingMode = TextWrappingModes.NoWrap;
 
-        textBox.color = new Color32(0, 0, 0, 0);
-    }
-
-    private void ResizeBox()
-    {
         textBox.ForceMeshUpdate();
-        float textW = Mathf.Min(textBox.preferredWidth, maxWidth);
-        float textH = textBox.preferredHeight;
-        float boxH = textH + marginY * 2;
-
-        // left / right / middle: 고정 크기 (Y만 높이에 맞게)
-        middleBox.sizeDelta = new Vector2(middleBox.sizeDelta.x, boxH);
-
-        // border만 X(텍스트 너비에 맞게) + Y(줄바꿈 시 높이)
-        float fixedW = leftBox.sizeDelta.x + middleBox.sizeDelta.x + rightBox.sizeDelta.x;
-        float borderW = Mathf.Max(0, (textW + marginX * 2 - fixedW) / 2f);
-
-        leftBorderBox.sizeDelta = new Vector2(borderW, boxH);
-        rightBorderBox.sizeDelta = new Vector2(borderW, boxH);
-
-        // 위치 배치 (중앙 기준)
-        float halfMid = middleBox.sizeDelta.x / 2f;
-        float halfBorder = borderW / 2f;
-        float halfLeftCap = leftBox.sizeDelta.x / 2f;
-        float halfRightCap = rightBox.sizeDelta.x / 2f;
-
-        middleBox.anchoredPosition = Vector2.zero;
-        leftBorderBox.anchoredPosition = new Vector2(-(halfMid + halfBorder), 0);
-        rightBorderBox.anchoredPosition = new Vector2(halfMid + halfBorder, 0);
-        leftBox.anchoredPosition = new Vector2(-(halfMid + borderW + halfLeftCap), 0);
-        rightBox.anchoredPosition = new Vector2(halfMid + borderW + halfRightCap, 0);
-
-        // 루트 RectTransform 전체 크기 업데이트
-        uiRect.sizeDelta = new Vector2(fixedW + borderW * 2, boxH);
+        textBox.color = new Color32(255, 255, 255, 0);
     }
 
     private void SetupMeshCache()
@@ -197,16 +138,6 @@ public class TextBox : MonoBehaviour
             charAlpha[i] = 0f;
             randomPhase[i] = Random.Range(0f, 100f);
         }
-    }
-
-    private void SetBoxVisible(bool visible)
-    {
-        leftBox.gameObject.SetActive(visible);
-        leftBorderBox.gameObject.SetActive(visible);
-        middleBox.gameObject.SetActive(visible);
-        rightBorderBox.gameObject.SetActive(visible);
-        rightBox.gameObject.SetActive(visible);
-        textBox.gameObject.SetActive(visible);
     }
 
     #endregion
@@ -357,7 +288,6 @@ public class TextBox : MonoBehaviour
         while (!token.IsCancellationRequested)
         {
             textBox.ForceMeshUpdate();
-            textInfo = textBox.textInfo;
 
             float t = Time.time;
 
@@ -386,7 +316,7 @@ public class TextBox : MonoBehaviour
                 for (int j = 0; j < 4; j++)
                 {
                     vertices[vert + j] = originalVertices[mat][vert + j] + finalOffset;
-                    colors[vert + j] = new Color32(0, 0, 0, alpha);
+                    colors[vert + j] = new Color32(255, 255, 255, alpha);
                 }
             }
 
