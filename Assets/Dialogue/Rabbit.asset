@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75cf880e12af0e0439dc30abbbb273e0, type: 3}
+  m_Name: Rabbit
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueData
+  dialogues:
+  - rid: 1633149309827678283
+  - rid: 7292419634693931079
+  - rid: 1633149309827678284
+  - rid: 7292419634693931080
+  - rid: 1633149309827678285
+  sceneName: 
+  references:
+    version: 2
+    RefIds:
+    - rid: 1633149309827678283
+      type: {class: Dialogue, ns: , asm: Assembly-CSharp}
+      data:
+        delayBefore: 1
+        checkInput: 1
+        textTargetPath: Shinuchi
+        Text: "\uC65C \uD1A0\uB07C\uAC00 \uAC15\uD55C\uC9C0 \uC544\uB098?"
+    - rid: 1633149309827678284
+      type: {class: Dialogue, ns: , asm: Assembly-CSharp}
+      data:
+        delayBefore: 4
+        checkInput: 1
+        textTargetPath: Shinuchi
+        Text: "\uC65C\uC9C0?"
+    - rid: 1633149309827678285
+      type: {class: Dialogue, ns: , asm: Assembly-CSharp}
+      data:
+        delayBefore: 1
+        checkInput: 1
+        textTargetPath: Shinuchi
+        Text: "\uADF8\uAC74 \uAE61\uC640 \uCD1D\uC774 \uC788\uAE30 \uB54C\uBB38\uC774\uC9C0"
+    - rid: 7292419634693931079
+      type: {class: MethodTrigger, ns: , asm: Assembly-CSharp}
+      data:
+        delayBefore: 0
+        commandName: 0
+        commandParameter: 
+    - rid: 7292419634693931080
+      type: {class: MethodTrigger, ns: , asm: Assembly-CSharp}
+      data:
+        delayBefore: 0
+        commandName: 1
+        commandParameter: 
