@@ -15,6 +15,7 @@ public class EnvManager : Singleton<EnvManager>
     [SerializeField] private CinemachineCamera middleVcam;
     [SerializeField] private CinemachineCamera leftVcam;
     [SerializeField] private CinemachineCamera rightVcam;
+    [SerializeField] private Animator playerAnimator;
 
     // ── 설정 ─────────────────────────────────────────────────────
     private static readonly Color redEnvColor = new Color32(203, 113, 113, 255);
@@ -95,6 +96,13 @@ public class EnvManager : Singleton<EnvManager>
         CleanVCam();
         middleVcam.Priority = PRIOIRTY_NUM;
     }
+
+    //animation clip 이랑 매핑시키는 enum 파고 에디터 수정 후 변경
+    // public async UniTask SetMiddleVCam(float time)
+    // {
+    //     CleanVCam();
+    //     middleVcam.Priority = PRIOIRTY_NUM;
+    // }
 
     #endregion
 

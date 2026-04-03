@@ -60,8 +60,8 @@ MonoBehaviour:
   - From: LeftVirtualCam
     To: EnvTrackVCam
     Blend:
-      Style: 5
-      Time: 1
+      Style: 1
+      Time: 2
       CustomCurve:
         serializedVersion: 2
         m_Curve: []
@@ -71,8 +71,8 @@ MonoBehaviour:
   - From: RightVirtualCam
     To: EnvTrackVCam
     Blend:
-      Style: 5
-      Time: 1
+      Style: 1
+      Time: 2
       CustomCurve:
         serializedVersion: 2
         m_Curve: []
