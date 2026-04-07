@@ -18,12 +18,13 @@ public class DialogueManager : Singleton<DialogueManager>
     // ── References ───────────────────────────────────────────────
     [SerializeField] private GameObject talkUI;
     [SerializeField] private ButtonMapper titleManager;
+    [SerializeField] private ChoiceEventManager choiceManager;
     [SerializeField] private TextBox leftTextBox;
     [SerializeField] private TextBox rightTextBox;
 
     // ── 설정 ─────────────────────────────────────────────────────
     [Header("딜레이")]
-    [SerializeField] private float textShowDelay = 0.7f;
+    [SerializeField] private float textShowDelay = 0.7f;    //광클로 바로 스킵할 수 없도록 스킵에 존재하는 지연시간
 
     // ── 런타임 상태 ───────────────────────────────────────────────
     private DialogueData curTalkData;
@@ -57,9 +58,12 @@ public class DialogueManager : Singleton<DialogueManager>
         if (data == null) { Debug.LogError("DialogueData가 null입니다."); return; }
         titleManager.TitleOff();
         await EnvManager.Instance.SetBrightEnv(2.0f);
+        await UniTask.Delay(TimeSpan.FromSeconds(1.5f));
+        await EnvManager.Instance.SetBrightSpotLight(0f);
         curTalkData = data;
         await TimeLineEvent();
         await EnvManager.Instance.SetDarkEnv(2.0f);
+        await EnvManager.Instance.SetOffSpotLight(0f);
         titleManager.TitleOn();
     }
 
@@ -143,6 +147,23 @@ public class DialogueManager : Singleton<DialogueManager>
                     eventCommandInvoker.InvokeCommand(
                         $"{trigger.commandName}:{trigger.commandParameter}");
                     break;
+
+                case eventType.ChoiceDial:
+                    var choiceDial = ev as ChoiceDialogue;
+                    rightTextBox.Hide();
+                    leftTextBox.Hide();
+                    if (choiceDial.isLeft)
+                    {
+                        await EnvManager.Instance.SetLeftVCam(1f);
+                    }
+                    else
+                    {
+                        await EnvManager.Instance.SetRightVCam(1f);
+                    }
+
+                    choiceManager.ShowChoice(choiceDial);
+                    await choiceManager.TimerTask();
+                    break;
             }
 
             if (eventLock)
@@ -169,7 +190,7 @@ public class DialogueManager : Singleton<DialogueManager>
     /// Common.removeTag로 커스텀 태그 파싱 후 TMP 리치텍스트만 남긴다.
     /// TODO: 추후 별도 TextParser 클래스로 분리
     /// </summary>
-    [SerializeField] private int letterDelay = 300; // <delay> 1개당 대기 ms
+    [SerializeField] private int letterDelay = 700; // <delay> 1개당 대기 ms
     private TextBoxData BuildTextBoxData(string rawText)
     {
         string text = rawText;
@@ -198,6 +219,8 @@ public class DialogueManager : Singleton<DialogueManager>
         // 4. 효과음 끊김 포인트 (쉼표/마침표 위치)
         Queue<int> soundBreaks = Common.nextEscape(
             Common.rich2normal(text), escapeType.comma);
+
+        Common.AddNewLine(ref text);
 
         return new TextBoxData
         {

@@ -19,7 +19,15 @@ public enum eventType
     Anim,
     SFX,
     BGM,
-    Event
+    Event,
+    ChoiceDial,
+}
+
+[System.Serializable]
+public struct choiceRes
+{
+    public string textName;
+    public string appendDialPath;
 }
 
 [System.Serializable]
@@ -57,6 +65,38 @@ public class Dialogue : GameEvent
     public Dialogue()
     {
         Type = eventType.Dial;
+    }
+}
+
+[System.Serializable]
+public class ChoiceDialogue : GameEvent
+{
+    [SerializeField] private string textTargetPath;  // GameObject 경로를 저장
+    public Boolean isLeft;
+    private GameObject _textTarget;
+    public GameObject TextTarget    //경로를 저장하다 런타임에 참조를 찾는 방식
+    {
+        get
+        {
+            if (_textTarget == null && !string.IsNullOrEmpty(textTargetPath))
+            {
+                _textTarget = GameObject.Find(textTargetPath);
+            }
+            return _textTarget;
+        }
+        set
+        {
+            _textTarget = value;
+            textTargetPath = value != null ? value.name : string.Empty;
+        }
+    }
+    public choiceRes next1;
+    public choiceRes next2;
+    public choiceRes next3;
+
+    public ChoiceDialogue()
+    {
+        Type = eventType.ChoiceDial;
     }
 }
 

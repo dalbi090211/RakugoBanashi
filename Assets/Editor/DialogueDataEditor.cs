@@ -49,6 +49,27 @@ public class DialogueDataEditor : Editor
                     dial.checkInput = EditorGUILayout.Toggle("Check Input", dial.checkInput);
                     break;
 
+                case eventType.ChoiceDial:
+                    ChoiceDialogue choiceDial = evt as ChoiceDialogue;
+                    choiceDial.TextTarget = (GameObject)EditorGUILayout.ObjectField("Text Target", choiceDial.TextTarget, typeof(GameObject), true);
+                    choiceDial.isLeft = EditorGUILayout.Toggle("Is Left", choiceDial.isLeft);
+
+                    EditorGUILayout.Space(5);
+                    EditorGUILayout.LabelField("Choice 1", EditorStyles.boldLabel);
+                    choiceDial.next1.textName = EditorGUILayout.TextField("Text", choiceDial.next1.textName);
+                    choiceDial.next1.appendDialPath = EditorGUILayout.TextField("Dialogue Path", choiceDial.next1.appendDialPath);
+
+                    EditorGUILayout.Space(5);
+                    EditorGUILayout.LabelField("Choice 2", EditorStyles.boldLabel);
+                    choiceDial.next2.textName = EditorGUILayout.TextField("Text", choiceDial.next2.textName);
+                    choiceDial.next2.appendDialPath = EditorGUILayout.TextField("Dialogue Path", choiceDial.next2.appendDialPath);
+
+                    EditorGUILayout.Space(5);
+                    EditorGUILayout.LabelField("Choice 3", EditorStyles.boldLabel);
+                    choiceDial.next3.textName = EditorGUILayout.TextField("Text", choiceDial.next3.textName);
+                    choiceDial.next3.appendDialPath = EditorGUILayout.TextField("Dialogue Path", choiceDial.next3.appendDialPath);
+                    break;
+
                 case eventType.Anim:
                     Animation anim = evt as Animation;
                     anim.AnimTarget = (GameObject)EditorGUILayout.ObjectField("Anim Target", anim.AnimTarget, typeof(GameObject), true);
@@ -132,6 +153,8 @@ public class DialogueDataEditor : Editor
             data.dialogues.Add(new BGM());
         if (GUILayout.Button("Event"))
             data.dialogues.Add(new MethodTrigger());
+        if (GUILayout.Button("Choice"))
+            data.dialogues.Add(new ChoiceDialogue());
 
         EditorGUILayout.EndHorizontal();
     }

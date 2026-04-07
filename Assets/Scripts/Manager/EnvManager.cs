@@ -10,8 +10,9 @@ public class EnvManager : Singleton<EnvManager>
     private const int PRIOIRTY_NUM = 10;
     // ── References ───────────────────────────────────────────────
     [SerializeField] private Volume postProcessVolume;
-    [SerializeField] private Light2D leftSpotLight;
-    [SerializeField] private Light2D rightSpotLight;
+    [SerializeField] private Light2D middleLight;
+    [SerializeField] private Light2D audience1stLight;
+    [SerializeField] private Light2D audience2stLight;
     [SerializeField] private CinemachineCamera middleVcam;
     [SerializeField] private CinemachineCamera leftVcam;
     [SerializeField] private CinemachineCamera rightVcam;
@@ -20,6 +21,7 @@ public class EnvManager : Singleton<EnvManager>
     // ── 설정 ─────────────────────────────────────────────────────
     private static readonly Color redEnvColor = new Color32(203, 113, 113, 255);
     private static readonly Color darkEnvColor = new Color32(87, 87, 87, 255);
+    private static readonly Color offEnvColor = new Color32(0, 0, 0, 255);
     private static readonly Color brightEnvColor = new Color32(200, 200, 200, 255);
 
     // ── VCam 설정 ─────────────────────────────────────────────────
@@ -38,6 +40,8 @@ public class EnvManager : Singleton<EnvManager>
     {
         base.Awake();
         postProcessVolume.profile.TryGet(out colorAdjustments);
+        SetDarkEnv(0f).Forget();
+        SetOffSpotLight(0f).Forget();
     }
 
     #endregion
@@ -51,24 +55,25 @@ public class EnvManager : Singleton<EnvManager>
     public async UniTask SetRedSpotLight(float time) => await SetSpotLightColor(redEnvColor, time);
     public async UniTask SetDarkSpotLight(float time) => await SetSpotLightColor(darkEnvColor, time);
     public async UniTask SetBrightSpotLight(float time) => await SetSpotLightColor(brightEnvColor, time);
+    public async UniTask SetOffSpotLight(float time) => await SetSpotLightColor(offEnvColor, time);
     public async UniTask SetLeftVCam(float time)
     {
         CleanVCam();
         leftVcam.Priority = PRIOIRTY_NUM;
 
-        var composer = leftVcam.GetComponent<CinemachineFollow>();
-        composer.FollowOffset = leftOriginOffset;
-        Vector3 startOffset = composer.FollowOffset;
-        Vector3 targetOffset = startOffset + leftChangeOffset;
+        // var composer = leftVcam.GetComponent<CinemachineFollow>();
+        // composer.FollowOffset = leftOriginOffset;
+        // Vector3 startOffset = composer.FollowOffset;
+        // Vector3 targetOffset = startOffset + leftChangeOffset;
 
-        float elapsed = 0f;
-        while (elapsed < time)
-        {
-            elapsed += Time.deltaTime;
-            composer.FollowOffset = Vector3.Lerp(startOffset, targetOffset, elapsed / time);
-            await UniTask.Yield();
-        }
-        composer.FollowOffset = targetOffset;
+        // float elapsed = 0f;
+        // while (elapsed < time)
+        // {
+        //     elapsed += Time.deltaTime;
+        //     composer.FollowOffset = Vector3.Lerp(startOffset, targetOffset, elapsed / time);
+        //     await UniTask.Yield();
+        // }
+        // composer.FollowOffset = targetOffset;
     }
 
     public async UniTask SetRightVCam(float time)
@@ -76,19 +81,19 @@ public class EnvManager : Singleton<EnvManager>
         CleanVCam();
         rightVcam.Priority = PRIOIRTY_NUM;
 
-        var composer = rightVcam.GetComponent<CinemachineFollow>();
-        composer.FollowOffset = rightOriginOffset;
-        Vector3 startOffset = composer.FollowOffset;
-        Vector3 targetOffset = startOffset + rightChangeOffset;
+        // var composer = rightVcam.GetComponent<CinemachineFollow>();
+        // composer.FollowOffset = rightOriginOffset;
+        // Vector3 startOffset = composer.FollowOffset;
+        // Vector3 targetOffset = startOffset + rightChangeOffset;
 
-        float elapsed = 0f;
-        while (elapsed < time)
-        {
-            elapsed += Time.deltaTime;
-            composer.FollowOffset = Vector3.Lerp(startOffset, targetOffset, elapsed / time);
-            await UniTask.Yield();
-        }
-        composer.FollowOffset = targetOffset;
+        // float elapsed = 0f;
+        // while (elapsed < time)
+        // {
+        //     elapsed += Time.deltaTime;
+        //     composer.FollowOffset = Vector3.Lerp(startOffset, targetOffset, elapsed / time);
+        //     await UniTask.Yield();
+        // }
+        // composer.FollowOffset = targetOffset;
     }
 
     public async UniTask SetMiddleVCam(float time)
@@ -126,21 +131,24 @@ public class EnvManager : Singleton<EnvManager>
 
     private async UniTask SetSpotLightColor(Color targetColor, float time)
     {
-        Color startLeft = leftSpotLight.color;
-        Color startRight = rightSpotLight.color;
+        Color startMiddle = middleLight.color;
+        Color startAudience1 = audience1stLight.color;
+        Color startAudience2 = audience2stLight.color;
         float elapsed = 0f;
 
         while (elapsed < time)
         {
             elapsed += Time.deltaTime;
             float t = elapsed / time;
-            leftSpotLight.color = Color.Lerp(startLeft, targetColor, t);
-            rightSpotLight.color = Color.Lerp(startRight, targetColor, t);
+            middleLight.color = Color.Lerp(startMiddle, targetColor, t);
+            audience1stLight.color = Color.Lerp(startAudience1, targetColor, t);
+            audience2stLight.color = Color.Lerp(startAudience2, targetColor, t);
             await UniTask.Yield();
         }
 
-        leftSpotLight.color = targetColor;
-        rightSpotLight.color = targetColor;
+        middleLight.color = targetColor;
+        audience1stLight.color = targetColor;
+        audience2stLight.color = targetColor;
     }
 
     #endregion

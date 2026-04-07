@@ -184,7 +184,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -62, y: -77}
+  m_AnchoredPosition: {x: -67.9, y: -57.6}
   m_SizeDelta: {x: 429.2618, y: 199.5186}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4943233156550236778
@@ -218,8 +218,8 @@ MonoBehaviour:
   m_text: "\uC65C \uD1A0\uB07C\uAC00 \uAC15\uD55C\uC9C0 \uC544\uB098?\n\uAE61\uACFC
     \uCD1D\uC774 \uC788\uAE30 \uB54C\uBB38\uC774\uB77C\uB124"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 147e2a6d33caa5846a6f92852752565c, type: 2}
-  m_sharedMaterial: {fileID: 4982962937964489820, guid: 147e2a6d33caa5846a6f92852752565c, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 1ba8e72bea8926f4893277f8367c6567, type: 2}
+  m_sharedMaterial: {fileID: 4489655903690208467, guid: 1ba8e72bea8926f4893277f8367c6567, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -568,16 +568,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 881953713467570489997cd3d91d6fe8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TextBox
-  uiRect: {fileID: 9062361113160399511}
   maxWidth: 600
-  marginX: 100
-  marginY: 100
-  leftBox: {fileID: 4253801139033267921}
-  leftBorderBox: {fileID: 8225767447554193181}
-  middleBox: {fileID: 2724221401130158108}
-  rightBorderBox: {fileID: 1309551291320551969}
-  rightBox: {fileID: 5975263379644617369}
-  textBox: {fileID: 1643139514465818133}
+  textBox: {fileID: 0}
   fadeDuration: 0.01
   moveDistance: 5
   letterShowDelay: 30
