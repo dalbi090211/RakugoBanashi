@@ -19,8 +19,10 @@ public class DialogueManager : Singleton<DialogueManager>
     [SerializeField] private GameObject talkUI;
     [SerializeField] private ButtonMapper titleManager;
     [SerializeField] private ChoiceEventManager choiceManager;
+    [SerializeField] private MakuraStarter makuraStarter;
     [SerializeField] private TextBox leftTextBox;
     [SerializeField] private TextBox rightTextBox;
+    [SerializeField] private TextBox middleTextBox;
 
     // ── 설정 ─────────────────────────────────────────────────────
     [Header("딜레이")]
@@ -30,7 +32,7 @@ public class DialogueManager : Singleton<DialogueManager>
     private DialogueData curTalkData;
     private DialogueData appendData;
     private bool eventLock;
-    private bool curLeft = false;
+    private CamDir curDir = CamDir.middle;
     private EventCommandInvoker eventCommandInvoker = new EventCommandInvoker();
 
     // ─────────────────────────────────────────────────────────────
@@ -61,6 +63,15 @@ public class DialogueManager : Singleton<DialogueManager>
         await UniTask.Delay(TimeSpan.FromSeconds(1.5f));
         await EnvManager.Instance.SetBrightSpotLight(0f);
         curTalkData = data;
+
+        await UniTask.Delay(TimeSpan.FromSeconds(1f));
+        makuraStarter.setInputField(true);
+        MakuraResult result = await makuraStarter.InputAwait(data.sceneName);
+        makuraStarter.setInputField(false);
+
+        Debug.Log(result.score);
+        Debug.Log(result.feedback);
+
         await TimeLineEvent();
         await EnvManager.Instance.SetDarkEnv(2.0f);
         await EnvManager.Instance.SetOffSpotLight(0f);
@@ -77,25 +88,21 @@ public class DialogueManager : Singleton<DialogueManager>
         if (!eventLock) return;
 
         bool isDone;
-        if (curLeft)
-        {
+        if (curDir == CamDir.left)
             isDone = leftTextBox.Skip();
-        }
-        else
-        {
+        else if (curDir == CamDir.right)
             isDone = rightTextBox.Skip();
-        }
+        else
+            isDone = middleTextBox.Skip();
 
         if (isDone)
         {
-            if (curLeft)
-            {
+            if (curDir == CamDir.left)
                 leftTextBox.Hide();
-            }
-            else
-            {
+            else if (curDir == CamDir.right)
                 rightTextBox.Hide();
-            }
+            else
+                middleTextBox.Hide();
             eventLock = false;
         }
     }
@@ -117,21 +124,30 @@ public class DialogueManager : Singleton<DialogueManager>
                 case eventType.Dial:
                     var dialogue = ev as Dialogue;
                     eventLock = dialogue.checkInput;
-                    curLeft = dialogue.isLeft;
+                    curDir = dialogue.direction;
 
                     TextBoxData data = BuildTextBoxData(dialogue.Text);
 
-                    if (dialogue.isLeft)
+                    if (dialogue.direction == CamDir.left)
                     {
                         rightTextBox.Hide();
+                        middleTextBox.Hide();
                         EnvManager.Instance.SetLeftVCam(1f).Forget();
                         await leftTextBox.Init(data);
                     }
-                    else
+                    else if (dialogue.direction == CamDir.right)
                     {
                         leftTextBox.Hide();
+                        middleTextBox.Hide();
                         EnvManager.Instance.SetRightVCam(1f).Forget();
                         await rightTextBox.Init(data);
+                    }
+                    else // middle
+                    {
+                        leftTextBox.Hide();
+                        rightTextBox.Hide();
+                        EnvManager.Instance.SetMiddleVCam(1f).Forget();
+                        await middleTextBox.Init(data);
                     }
                     await UniTask.Delay(TimeSpan.FromSeconds(textShowDelay));
                     SkipText();
@@ -152,14 +168,14 @@ public class DialogueManager : Singleton<DialogueManager>
                     var choiceDial = ev as ChoiceDialogue;
                     rightTextBox.Hide();
                     leftTextBox.Hide();
-                    if (choiceDial.isLeft)
-                    {
+                    middleTextBox.Hide();
+
+                    if (choiceDial.direction == CamDir.left)
                         await EnvManager.Instance.SetLeftVCam(1f);
-                    }
-                    else
-                    {
+                    else if (choiceDial.direction == CamDir.right)
                         await EnvManager.Instance.SetRightVCam(1f);
-                    }
+                    else
+                        await EnvManager.Instance.SetMiddleVCam(1f);
 
                     choiceManager.ShowChoice(choiceDial);
                     await choiceManager.TimerTask();
@@ -176,7 +192,7 @@ public class DialogueManager : Singleton<DialogueManager>
             appendData = null;
             await TimeLineEvent();
         }
-        EnvManager.Instance.SetMiddleVCam(1f).Forget();
+        EnvManager.Instance.SetEnvVCam(1f).Forget();
         CleanUp();
     }
 

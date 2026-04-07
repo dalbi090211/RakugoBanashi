@@ -45,14 +45,14 @@ public class DialogueDataEditor : Editor
                     Dialogue dial = evt as Dialogue;
                     dial.TextTarget = (GameObject)EditorGUILayout.ObjectField("Text Target", dial.TextTarget, typeof(GameObject), true);
                     dial.Text = EditorGUILayout.TextField("Text", dial.Text);
-                    dial.isLeft = EditorGUILayout.Toggle("Is Left", dial.isLeft);
+                    dial.direction = (CamDir)EditorGUILayout.EnumPopup("Direction", dial.direction); // 수정
                     dial.checkInput = EditorGUILayout.Toggle("Check Input", dial.checkInput);
                     break;
 
                 case eventType.ChoiceDial:
                     ChoiceDialogue choiceDial = evt as ChoiceDialogue;
                     choiceDial.TextTarget = (GameObject)EditorGUILayout.ObjectField("Text Target", choiceDial.TextTarget, typeof(GameObject), true);
-                    choiceDial.isLeft = EditorGUILayout.Toggle("Is Left", choiceDial.isLeft);
+                    choiceDial.direction = (CamDir)EditorGUILayout.EnumPopup("Direction", choiceDial.direction); // 수정
 
                     EditorGUILayout.Space(5);
                     EditorGUILayout.LabelField("Choice 1", EditorStyles.boldLabel);

@@ -28,7 +28,7 @@ MonoBehaviour:
         delayBefore: 0
         checkInput: 1
         textTargetPath: Shinuchi
-        isLeft: 0
+        direction: 2
         Text: "\uADF8 \uC774\uB984\uC774 \uC815\uB9D0\uB85C \"\uC218\uD55C\uBB34
           \uAC70\uBD81\uC774\uC640 \uB450\uB8E8\uBBF8 \uC0BC\uCC9C\uAC00\uBC14\uC790
           \uB3D9\uBC29\uC0AD \uCE58\uCE58\uCE74\uD3EC \uC0AC\uB9AC\uC0AC\uB9AC\uC13C\uD0C0
@@ -41,7 +41,7 @@ MonoBehaviour:
         delayBefore: 0
         checkInput: 1
         textTargetPath: Shinuchi
-        isLeft: 1
+        direction: 0
         Text: "\uC608? \uB9C8\uB2D8. \uBA40\uC5B4\uC11C \uC798 \uBABB\uB4E4\uC5C8\uC2B5\uB2C8\uB2E4.
           \uB2E4\uC2DC \uD55C\uBC88 \uB9D0\uC500\uD574 \uC8FC\uC2DC\uC9C0\uC694."
     - rid: 7292419771869167691
@@ -50,7 +50,7 @@ MonoBehaviour:
         delayBefore: 0
         checkInput: 1
         textTargetPath: Shinuchi
-        isLeft: 0
+        direction: 2
         Text: "\uADF8\uB7EC\uB2C8\uAE4C \uADF8 \uC774\uB984\uC774  \"\uC218\uD55C\uBB34
           \uAC70\uBD81\uC774\uC640 \uB450\uB8E8\uBBF8 \uC0BC\uCC9C\uAC00\uBC14\uC790
           \uB3D9\uBC29\uC0AD \uCE58\uCE58\uCE74\uD3EC \uC0AC\uB9AC\uC0AC\uB9AC\uC13C\uD0C0
@@ -63,7 +63,7 @@ MonoBehaviour:
         delayBefore: 0
         checkInput: 1
         textTargetPath: Shinuchi
-        isLeft: 1
+        direction: 0
         Text: "\uC608. \uB9DE\uC2B5\uB2C8\uB2E4 \uB9C8\uB2D8. \uC5B4\uC11C \uB098\uC624\uC2DC\uC9C0\uC694."
     - rid: 7292419771869167698
       type: {class: Dialogue, ns: , asm: Assembly-CSharp}
@@ -71,5 +71,5 @@ MonoBehaviour:
         delayBefore: 0
         checkInput: 1
         textTargetPath: Shinuchi
-        isLeft: 0
+        direction: 2
         Text: "\uC5B4\uBA38\uB2D8. \uC5EC\uAE30\uC11C \uBB50 \uD558\uC2ED\uB2C8\uAE4C?"

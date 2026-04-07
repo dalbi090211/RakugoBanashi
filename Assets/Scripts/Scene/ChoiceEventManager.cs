@@ -9,13 +9,19 @@ public class ChoiceEventManager : MonoBehaviour
     [SerializeField] private GameObject gameLayer;
     [SerializeField] private GameObject leftChoiceLayer;
     [SerializeField] private GameObject rightChoiceLayer;
+    [SerializeField] private GameObject middleChoiceLayer;
 
     [SerializeField] private ChoiceButton leftChoiceButton1;
     [SerializeField] private ChoiceButton leftChoiceButton2;
     [SerializeField] private ChoiceButton leftChoiceButton3;
+
     [SerializeField] private ChoiceButton rightChoiceButton1;
     [SerializeField] private ChoiceButton rightChoiceButton2;
     [SerializeField] private ChoiceButton rightChoiceButton3;
+
+    [SerializeField] private ChoiceButton middleChoiceButton1;
+    [SerializeField] private ChoiceButton middleChoiceButton2;
+    [SerializeField] private ChoiceButton middleChoiceButton3;
 
     [SerializeField] private Image timerBar; // 타이머 UI (Image fillAmount으로 표시)
     [SerializeField] private float timeLimit = 5f;
@@ -34,10 +40,12 @@ public class ChoiceEventManager : MonoBehaviour
     {
         defaultChoice = choiceDial.next1; // 기본값은 첫번째 선택지
 
-        if (choiceDial.isLeft)
+        if (choiceDial.direction == CamDir.left)
             setLeftCanva(choiceDial.next1, choiceDial.next2, choiceDial.next3);
-        else
+        else if (choiceDial.direction == CamDir.right)
             setRightCanva(choiceDial.next1, choiceDial.next2, choiceDial.next3);
+        else
+            setMiddleCanva(choiceDial.next1, choiceDial.next2, choiceDial.next3);
     }
 
     public async UniTask TimerTask()
@@ -88,10 +96,20 @@ public class ChoiceEventManager : MonoBehaviour
         rightChoiceButton3.setData(dial3, this);
     }
 
+    private void setMiddleCanva(choiceRes dial1, choiceRes dial2, choiceRes dial3)
+    {
+        middleChoiceLayer.SetActive(true);
+        gameLayer.SetActive(true);
+        middleChoiceButton1.setData(dial1, this);
+        middleChoiceButton2.setData(dial2, this);
+        middleChoiceButton3.setData(dial3, this);
+    }
+
     private void canvaOff()
     {
         leftChoiceLayer.SetActive(false);
         rightChoiceLayer.SetActive(false);
+        middleChoiceLayer.SetActive(false);
         gameLayer.SetActive(false);
     }
 }

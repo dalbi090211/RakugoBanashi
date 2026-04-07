@@ -4,6 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+public enum CamDir
+{
+    left,
+    middle,
+    right
+}
+
 public enum BGMArea
 {
     Unset = -1,
@@ -42,7 +49,7 @@ public class Dialogue : GameEvent
 {
     public Boolean checkInput = true;
     [SerializeField] private string textTargetPath;  // GameObject 경로를 저장
-    public Boolean isLeft;
+    public CamDir direction;
     private GameObject _textTarget;
     public GameObject TextTarget    //경로를 저장하다 런타임에 참조를 찾는 방식
     {
@@ -72,7 +79,7 @@ public class Dialogue : GameEvent
 public class ChoiceDialogue : GameEvent
 {
     [SerializeField] private string textTargetPath;  // GameObject 경로를 저장
-    public Boolean isLeft;
+    public CamDir direction;
     private GameObject _textTarget;
     public GameObject TextTarget    //경로를 저장하다 런타임에 참조를 찾는 방식
     {

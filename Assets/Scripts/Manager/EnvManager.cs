@@ -13,9 +13,10 @@ public class EnvManager : Singleton<EnvManager>
     [SerializeField] private Light2D middleLight;
     [SerializeField] private Light2D audience1stLight;
     [SerializeField] private Light2D audience2stLight;
-    [SerializeField] private CinemachineCamera middleVcam;
+    [SerializeField] private CinemachineCamera envVcam;
     [SerializeField] private CinemachineCamera leftVcam;
     [SerializeField] private CinemachineCamera rightVcam;
+    [SerializeField] private CinemachineCamera middleVcam;
     [SerializeField] private Animator playerAnimator;
 
     // ── 설정 ─────────────────────────────────────────────────────
@@ -39,6 +40,8 @@ public class EnvManager : Singleton<EnvManager>
     protected override void Awake()
     {
         base.Awake();
+        CleanVCam();
+        envVcam.Priority = PRIOIRTY_NUM;
         postProcessVolume.profile.TryGet(out colorAdjustments);
         SetDarkEnv(0f).Forget();
         SetOffSpotLight(0f).Forget();
@@ -94,6 +97,12 @@ public class EnvManager : Singleton<EnvManager>
         //     await UniTask.Yield();
         // }
         // composer.FollowOffset = targetOffset;
+    }
+
+    public async UniTask SetEnvVCam(float time)
+    {
+        CleanVCam();
+        envVcam.Priority = PRIOIRTY_NUM;
     }
 
     public async UniTask SetMiddleVCam(float time)
@@ -160,6 +169,7 @@ public class EnvManager : Singleton<EnvManager>
         leftVcam.Priority = 0;
         rightVcam.Priority = 0;
         middleVcam.Priority = 0;
+        envVcam.Priority = 0;
     }
 
     #endregion
