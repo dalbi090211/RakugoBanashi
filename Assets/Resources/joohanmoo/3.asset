@@ -14,9 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DialogueData
   dialogues:
   - rid: 7292419771869167689
-  - rid: 7292419771869167690
-  - rid: 7292419771869167691
-  - rid: 7292419771869167692
+  - rid: 7292419838150443093
   sceneName: 
   references:
     version: 2
@@ -26,30 +24,12 @@ MonoBehaviour:
       data:
         delayBefore: 0
         checkInput: 1
-        textTargetPath: 
-        isLeft: 0
-        Text: 
-    - rid: 7292419771869167690
-      type: {class: Dialogue, ns: , asm: Assembly-CSharp}
+        textTargetPath: Shinuchi
+        direction: 0
+        Text: "\uC124\uB9C8 \uBD80\uB97C \uC77C\uC774 \uC788\uACA0\uC5B4.<delay=0.4f>"
+    - rid: 7292419838150443093
+      type: {class: Emotion, ns: , asm: Assembly-CSharp}
       data:
         delayBefore: 0
-        checkInput: 1
-        textTargetPath: 
-        isLeft: 0
-        Text: 
-    - rid: 7292419771869167691
-      type: {class: Dialogue, ns: , asm: Assembly-CSharp}
-      data:
-        delayBefore: 0
-        checkInput: 1
-        textTargetPath: 
-        isLeft: 0
-        Text: 
-    - rid: 7292419771869167692
-      type: {class: Dialogue, ns: , asm: Assembly-CSharp}
-      data:
-        delayBefore: 0
-        checkInput: 1
-        textTargetPath: 
-        isLeft: 0
-        Text: 
+        score: -15
+        clear: 0

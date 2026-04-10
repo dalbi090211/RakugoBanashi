@@ -45,6 +45,84 @@ public class Common
         return (Regex.Replace(text, pattern, ""), tagIndex.ToArray());
     }
 
+    // <delay=0.3f> → (정제된 텍스트, Dictionary<index, ms>)
+    public static (string, Dictionary<int, float>) removeParamTag(string text, string tagName)
+    {
+        var result = new Dictionary<int, float>();
+        // <delay=0.3f> or <delay=300> 둘 다 허용
+        string pattern = $@"<{tagName}=(\d+\.?\d*)(f?)>";
+
+        int offset = 0;
+        var matches = Regex.Matches(text, pattern);
+
+        foreach (Match match in matches)
+        {
+            float value = float.Parse(match.Groups[1].Value);
+            // f 붙어있으면 초 단위 → ms 변환, 없으면 ms로 직접 사용
+            bool isSeconds = match.Groups[2].Value == "f" || value < 10f;
+            float ms = isSeconds ? value * 1000f : value;
+
+            int charIndex = match.Index - offset;
+            if (result.ContainsKey(charIndex)) result[charIndex] += ms;
+            else result[charIndex] = ms;
+
+            offset += match.Length;
+        }
+
+        text = Regex.Replace(text, pattern, "");
+        return (text, result);
+    }
+
+    public static (string, SpeedRange[]) removeParamRangeTag(string text, string tagName)
+    {
+        var ranges = new List<SpeedRange>();
+        var sb = new System.Text.StringBuilder();
+        var tagStack = new Stack<(int sbIndex, float multiplier)>();
+
+        string openPattern = $@"^<{tagName}=(\d+\.?\d*)(f?)>";
+        string closeTag = $"</{tagName}>";
+
+        int i = 0;
+        while (i < text.Length)
+        {
+            // 오프닝 태그 체크
+            var openMatch = Regex.Match(text.Substring(i), openPattern);
+            if (openMatch.Success)
+            {
+                float value = float.Parse(openMatch.Groups[1].Value,
+                                    System.Globalization.CultureInfo.InvariantCulture);
+                float multiplier = openMatch.Groups[2].Value == "f" || value < 10f
+                                ? value : value / 1000f;
+
+                tagStack.Push((sb.Length, multiplier));
+                i += openMatch.Length;
+                continue;
+            }
+
+            // 클로징 태그 체크
+            if (text.Substring(i).StartsWith(closeTag))
+            {
+                if (tagStack.Count > 0)
+                {
+                    var (startIdx, multiplier) = tagStack.Pop();
+                    ranges.Add(new SpeedRange
+                    {
+                        start = startIdx,
+                        end = sb.Length - 1,
+                        multiplier = multiplier
+                    });
+                }
+                i += closeTag.Length;
+                continue;
+            }
+
+            sb.Append(text[i]);
+            i++;
+        }
+
+        return (sb.ToString(), ranges.ToArray());
+    }
+
     public static (string, TextRange[]) removeTag(string text, string patternStart, string patternEnd)
     {
         int realIndex = 0;

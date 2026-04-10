@@ -3,6 +3,7 @@ using UnityEngine.Networking;
 using Cysharp.Threading.Tasks;
 using System.Text;
 using Newtonsoft.Json;
+using UnityEngine.InputSystem;
 
 public class MakuraEvaluator
 {
@@ -17,16 +18,39 @@ public class MakuraEvaluator
     public async UniTask<MakuraResult> Evaluate(string topic, string playerInput)
     {
         var keys = GetKeys();
+        Debug.Log("Key : " + keys.provider);
         return keys.provider switch
         {
             AIProvider.Anthropic => await EvaluateAnthropic(keys.anthropicKey, topic, playerInput),
             AIProvider.Gemini => await EvaluateGemini(keys.geminiKey, topic, playerInput),
             AIProvider.OpenAI => await EvaluateOpenAI(keys.openAIKey, topic, playerInput),
             AIProvider.Ollama => await EvaluateOllama(topic, playerInput),
+            AIProvider.Local => await EvaluateLocal(topic, playerInput),
             _ => null
         };
     }
 
+    private async UniTask<MakuraResult> EvaluateLocal(string topic, string playerInput)
+    {
+        await BERTManager.Instance.WaitUntilReady();
+
+        try
+        {
+            // 1. Sentis 모델을 통해 즉시 점수 계산
+            float score = await BERTManager.Instance.PredictScore(topic, playerInput);
+
+            // 2. 기존 MakuraResult 구조에 맞춰 결과 반환
+            return new MakuraResult
+            {
+                score = (int)score,
+            };
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"Sentis 평가 중 오류 발생: {e.Message}");
+            return null;
+        }
+    }
     private async UniTask<MakuraResult> EvaluateOpenAI(string apiKey, string topic, string playerInput)
     {
         var requestBody = new
@@ -162,16 +186,10 @@ public class MakuraEvaluator
         return JsonConvert.DeserializeObject<MakuraResult>(response.choices[0].message.content);
     }
 
-    private string BuildPrompt(string topic, string playerInput) => $@"당신은 라쿠고 마쿠라 평가자입니다.
-        주제: {topic}
-        플레이어 입력: {playerInput}
-
-    아래 기준으로 평가하고 반드시 JSON만 반환하세요. 다른 텍스트 없이 JSON만.
-    {{
-        ""score"": 0~100,
-        ""isRelated"": true또는false,
-        ""feedback"": ""한줄 피드백""
-    }}";
+    private string BuildPrompt(string topic, string playerInput)
+    {
+        return $"<|im_start|>user\n你是落语评分系统。请根据以下标准评分：\n1. 输入文本是否与主题相关\n2. 是否适合作为落语的开场白（枕）\n3. 内容是否有趣或引人入胜\n\n主题：{topic}\n输入文本：{playerInput}\n\n评分规则：\n- 100分：完全相关，非常适合作为落语开场白\n- 50分：部分相关，勉强可以\n- 0分：完全不相关\n\n只输出JSON，不要任何解释：{{\"score\":50}}<|im_end|>\n<|im_start|>assistant\n{{\"score\":";
+    }
 }
 
 // Response 클래스들
@@ -179,8 +197,6 @@ public class MakuraEvaluator
 public class MakuraResult
 {
     public int score;
-    public bool isRelated;
-    public string feedback;
 }
 
 [System.Serializable]

@@ -28,6 +28,7 @@ public enum eventType
     BGM,
     Event,
     ChoiceDial,
+    Emotion,
 }
 
 [System.Serializable]
@@ -198,5 +199,17 @@ public class MethodTrigger : GameEvent
     public MethodTrigger()
     {
         Type = eventType.Event;
+    }
+}
+
+[System.Serializable]
+public class Emotion : GameEvent
+{
+    public int score;
+    public bool clear;
+
+    public Emotion()
+    {
+        Type = eventType.Emotion;
     }
 }

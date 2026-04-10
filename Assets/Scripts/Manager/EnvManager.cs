@@ -6,9 +6,8 @@ using UnityEngine.Rendering.Universal;
 
 public class EnvManager : Singleton<EnvManager>
 {
-    // ── 상수 ──────────────────────────────────────────────────────
     private const int PRIOIRTY_NUM = 10;
-    // ── References ───────────────────────────────────────────────
+
     [SerializeField] private Volume postProcessVolume;
     [SerializeField] private Light2D middleLight;
     [SerializeField] private Light2D audience1stLight;
@@ -19,28 +18,35 @@ public class EnvManager : Singleton<EnvManager>
     [SerializeField] private CinemachineCamera middleVcam;
     [SerializeField] private Animator playerAnimator;
 
-    // ── 설정 ─────────────────────────────────────────────────────
+    // ── Impulse ───────────────────────────────────────────────────
+    // Inspector에서 ImpulseSource 컴포넌트 연결
+    // (EnvManager 오브젝트에 CinemachineImpulseSource 추가)
+    [Header("카메라 흔들림")]
+    [SerializeField] private CinemachineImpulseSource impulseSource;
+
     private static readonly Color redEnvColor = new Color32(203, 113, 113, 255);
     private static readonly Color darkEnvColor = new Color32(87, 87, 87, 255);
     private static readonly Color offEnvColor = new Color32(0, 0, 0, 255);
     private static readonly Color brightEnvColor = new Color32(200, 200, 200, 255);
 
-    // ── VCam 설정 ─────────────────────────────────────────────────
     private static readonly Vector3 leftOriginOffset = new Vector3(-2.49f, -0.52f, -4.53f);
     private static readonly Vector3 rightOriginOffset = new Vector3(3.06f, -0.66f, -3.9f);
     private static readonly Vector3 leftChangeOffset = new Vector3(-0.35f, 0f, 0f);
     private static readonly Vector3 rightChangeOffset = new Vector3(0.2f, 0f, 0f);
 
-    // ── 런타임 상태 ───────────────────────────────────────────────
     private ColorAdjustments colorAdjustments;
     private Color curColor = new Color32(87, 87, 87, 255);
 
-    // ─────────────────────────────────────────────────────────────
+    // 현재 활성 vcam 추적
+    private CinemachineCamera curVcam;
+
     #region Unity Lifecycle
+
     protected override void Awake()
     {
         base.Awake();
         CleanVCam();
+        curVcam = envVcam;
         envVcam.Priority = PRIOIRTY_NUM;
         postProcessVolume.profile.TryGet(out colorAdjustments);
         SetDarkEnv(0f).Forget();
@@ -49,79 +55,71 @@ public class EnvManager : Singleton<EnvManager>
 
     #endregion
 
-    // ─────────────────────────────────────────────────────────────
     #region Public API
 
     public async UniTask SetRedEnv(float time) => await SetEnvColor(redEnvColor, time);
     public async UniTask SetDarkEnv(float time) => await SetEnvColor(darkEnvColor, time);
     public async UniTask SetBrightEnv(float time) => await SetEnvColor(brightEnvColor, time);
+
     public async UniTask SetRedSpotLight(float time) => await SetSpotLightColor(redEnvColor, time);
     public async UniTask SetDarkSpotLight(float time) => await SetSpotLightColor(darkEnvColor, time);
     public async UniTask SetBrightSpotLight(float time) => await SetSpotLightColor(brightEnvColor, time);
     public async UniTask SetOffSpotLight(float time) => await SetSpotLightColor(offEnvColor, time);
+
     public async UniTask SetLeftVCam(float time)
     {
         CleanVCam();
+        curVcam = leftVcam;
         leftVcam.Priority = PRIOIRTY_NUM;
-
-        // var composer = leftVcam.GetComponent<CinemachineFollow>();
-        // composer.FollowOffset = leftOriginOffset;
-        // Vector3 startOffset = composer.FollowOffset;
-        // Vector3 targetOffset = startOffset + leftChangeOffset;
-
-        // float elapsed = 0f;
-        // while (elapsed < time)
-        // {
-        //     elapsed += Time.deltaTime;
-        //     composer.FollowOffset = Vector3.Lerp(startOffset, targetOffset, elapsed / time);
-        //     await UniTask.Yield();
-        // }
-        // composer.FollowOffset = targetOffset;
+        await UniTask.CompletedTask;
     }
 
     public async UniTask SetRightVCam(float time)
     {
         CleanVCam();
+        curVcam = rightVcam;
         rightVcam.Priority = PRIOIRTY_NUM;
-
-        // var composer = rightVcam.GetComponent<CinemachineFollow>();
-        // composer.FollowOffset = rightOriginOffset;
-        // Vector3 startOffset = composer.FollowOffset;
-        // Vector3 targetOffset = startOffset + rightChangeOffset;
-
-        // float elapsed = 0f;
-        // while (elapsed < time)
-        // {
-        //     elapsed += Time.deltaTime;
-        //     composer.FollowOffset = Vector3.Lerp(startOffset, targetOffset, elapsed / time);
-        //     await UniTask.Yield();
-        // }
-        // composer.FollowOffset = targetOffset;
+        await UniTask.CompletedTask;
     }
 
     public async UniTask SetEnvVCam(float time)
     {
         CleanVCam();
+        curVcam = envVcam;
         envVcam.Priority = PRIOIRTY_NUM;
+        await UniTask.CompletedTask;
     }
 
     public async UniTask SetMiddleVCam(float time)
     {
         CleanVCam();
+        curVcam = middleVcam;
         middleVcam.Priority = PRIOIRTY_NUM;
+        await UniTask.CompletedTask;
     }
 
-    //animation clip 이랑 매핑시키는 enum 파고 에디터 수정 후 변경
-    // public async UniTask SetMiddleVCam(float time)
-    // {
-    //     CleanVCam();
-    //     middleVcam.Priority = PRIOIRTY_NUM;
-    // }
+    /// <summary>
+    /// cramble 태그 트리거 → 현재 활성 vcam 흔들기
+    /// </summary>
+    /// <param name="duration">흔들림 지속 시간(초)</param>
+    /// <param name="intensity">흔들림 강도</param>
+    public void CameraShake(float duration, float intensity)
+    {
+        if (impulseSource == null)
+        {
+            Debug.LogWarning("ImpulseSource가 연결되지 않았습니다.");
+            return;
+        }
+
+        // ImpulseDefinition에서 duration 조정 후 impulse 발생
+        impulseSource.ImpulseDefinition.ImpulseDuration = duration;
+        impulseSource.GenerateImpulse(intensity);
+    }
 
     #endregion
 
-    // ─────────────────────────────────────────────────────────────
     #region 실제 구현
+
     private async UniTask SetEnvColor(Color targetColor, float time)
     {
         Color start = curColor;
@@ -162,8 +160,8 @@ public class EnvManager : Singleton<EnvManager>
 
     #endregion
 
-    // ─────────────────────────────────────────────────────────────
     #region 초기화
+
     private void CleanVCam()
     {
         leftVcam.Priority = 0;

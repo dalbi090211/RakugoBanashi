@@ -22,7 +22,9 @@ public struct TextBoxData
     public string parsedText;
 
     /// <summary>index → 대기 시간(ms). &lt;delay&gt; 태그 파싱 결과</summary>
-    public Dictionary<int, int> delayAt;
+    public Dictionary<int, float> delayAt;
+
+    public SpeedRange[] speedRanges;
 
     /// <summary>효과음을 끊어야 할 글자 인덱스 목록 (쉼표, 마침표 등)</summary>
     public Queue<int> soundBreaks;
@@ -35,4 +37,11 @@ public struct TextBoxData
 
     /// <summary>화면 흔들림 발생 인덱스 목록</summary>
     public int[] crambleTiming;
+}
+
+public struct SpeedRange
+{
+    public int start;
+    public int end;
+    public float multiplier; // 0.5f = 절반 속도, 2f = 두 배 속도
 }

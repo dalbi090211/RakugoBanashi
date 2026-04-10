@@ -16,8 +16,8 @@ MonoBehaviour:
   - From: EnvTrackVCam
     To: LeftVirtualCam
     Blend:
-      Style: 5
-      Time: 1
+      Style: 1
+      Time: 0.5
       CustomCurve:
         serializedVersion: 2
         m_Curve: []
@@ -27,8 +27,8 @@ MonoBehaviour:
   - From: EnvTrackVCam
     To: RightVirtualCam
     Blend:
-      Style: 5
-      Time: 1
+      Style: 1
+      Time: 0.5
       CustomCurve:
         serializedVersion: 2
         m_Curve: []
@@ -61,7 +61,7 @@ MonoBehaviour:
     To: EnvTrackVCam
     Blend:
       Style: 1
-      Time: 2
+      Time: 0.5
       CustomCurve:
         serializedVersion: 2
         m_Curve: []
@@ -72,7 +72,73 @@ MonoBehaviour:
     To: EnvTrackVCam
     Blend:
       Style: 1
-      Time: 2
+      Time: 0.5
+      CustomCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 0
+        m_PostInfinity: 0
+        m_RotationOrder: 0
+  - From: middleVirtualCam
+    To: RightVirtualCam
+    Blend:
+      Style: 1
+      Time: 0.5
+      CustomCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 0
+        m_PostInfinity: 0
+        m_RotationOrder: 0
+  - From: middleVirtualCam
+    To: LeftVirtualCam
+    Blend:
+      Style: 1
+      Time: 0.5
+      CustomCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 0
+        m_PostInfinity: 0
+        m_RotationOrder: 0
+  - From: middleVirtualCam
+    To: EnvTrackVCam
+    Blend:
+      Style: 1
+      Time: 0.5
+      CustomCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 0
+        m_PostInfinity: 0
+        m_RotationOrder: 0
+  - From: RightVirtualCam
+    To: middleVirtualCam
+    Blend:
+      Style: 1
+      Time: 0.5
+      CustomCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 0
+        m_PostInfinity: 0
+        m_RotationOrder: 0
+  - From: EnvTrackVCam
+    To: middleVirtualCam
+    Blend:
+      Style: 1
+      Time: 0.5
+      CustomCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 0
+        m_PostInfinity: 0
+        m_RotationOrder: 0
+  - From: LeftVirtualCam
+    To: middleVirtualCam
+    Blend:
+      Style: 1
+      Time: 0.5
       CustomCurve:
         serializedVersion: 2
         m_Curve: []

@@ -5,7 +5,8 @@ public enum AIProvider
     Anthropic,
     Gemini,
     OpenAI,
-    Ollama
+    Ollama,
+    Local,
 }
 
 [CreateAssetMenu(fileName = "ApiKeys", menuName = "Config/ApiKeys")]

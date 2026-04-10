@@ -13,63 +13,33 @@ MonoBehaviour:
   m_Name: 1
   m_EditorClassIdentifier: Assembly-CSharp::DialogueData
   dialogues:
-  - rid: 7292419771869167689
-  - rid: 7292419771869167690
-  - rid: 7292419771869167691
-  - rid: 7292419771869167692
-  - rid: 7292419771869167698
+  - rid: 7292419838150443089
+  - rid: 7292419838150443090
+  - rid: 7292419838150443091
   sceneName: 
   references:
     version: 2
     RefIds:
-    - rid: 7292419771869167689
-      type: {class: Dialogue, ns: , asm: Assembly-CSharp}
-      data:
-        delayBefore: 0
-        checkInput: 1
-        textTargetPath: Shinuchi
-        direction: 2
-        Text: "\uADF8 \uC774\uB984\uC774 \uC815\uB9D0\uB85C \"\uC218\uD55C\uBB34
-          \uAC70\uBD81\uC774\uC640 \uB450\uB8E8\uBBF8 \uC0BC\uCC9C\uAC00\uBC14\uC790
-          \uB3D9\uBC29\uC0AD \uCE58\uCE58\uCE74\uD3EC \uC0AC\uB9AC\uC0AC\uB9AC\uC13C\uD0C0
-          \uC6CC\uB9AC\uC6CC\uB9AC \uC138\uBE0C\uB9AC\uAE61 \uBB34\uB450\uC140\uB77C
-          \uAD6C\uB984\uC774 \uD5C8\uB9AC\uCF00\uC778 \uB2F4\uBCBC\uB77D \uC11C\uC0DD\uC6D0
-          \uACE0\uC591\uC774 \uBC14\uB451\uC774 \uB3CC\uB3CC\uC774\"\uC774 \uB9DE\uB290\uB0D0?"
-    - rid: 7292419771869167690
+    - rid: 7292419838150443089
       type: {class: Dialogue, ns: , asm: Assembly-CSharp}
       data:
         delayBefore: 0
         checkInput: 1
         textTargetPath: Shinuchi
         direction: 0
-        Text: "\uC608? \uB9C8\uB2D8. \uBA40\uC5B4\uC11C \uC798 \uBABB\uB4E4\uC5C8\uC2B5\uB2C8\uB2E4.
-          \uB2E4\uC2DC \uD55C\uBC88 \uB9D0\uC500\uD574 \uC8FC\uC2DC\uC9C0\uC694."
-    - rid: 7292419771869167691
-      type: {class: Dialogue, ns: , asm: Assembly-CSharp}
-      data:
-        delayBefore: 0
-        checkInput: 1
-        textTargetPath: Shinuchi
-        direction: 2
-        Text: "\uADF8\uB7EC\uB2C8\uAE4C \uADF8 \uC774\uB984\uC774  \"\uC218\uD55C\uBB34
-          \uAC70\uBD81\uC774\uC640 \uB450\uB8E8\uBBF8 \uC0BC\uCC9C\uAC00\uBC14\uC790
-          \uB3D9\uBC29\uC0AD \uCE58\uCE58\uCE74\uD3EC \uC0AC\uB9AC\uC0AC\uB9AC\uC13C\uD0C0
-          \uC6CC\uB9AC\uC6CC\uB9AC \uC138\uBE0C\uB9AC\uAE61 \uBB34\uB450\uC140\uB77C
-          \uAD6C\uB984\uC774 \uD5C8\uB9AC\uCF00\uC778 \uB2F4\uBCBC\uB77D \uC11C\uC0DD\uC6D0
-          \uACE0\uC591\uC774 \uBC14\uB451\uC774 \uB3CC\uB3CC\uC774\"\uAC00 \uB9DE\uB290\uB0D0?"
-    - rid: 7292419771869167692
+        Text: "\uC218\uD55C\uBB34 \uAC70\uBD81\uC774\uC640 \uB450\uB8E8\uBBF8...
+          \uC218\uD55C\uBB34 \uAC70\uBD81\uC774\uC640 \uB450\uB8E8\uBBF8...<delay=0.4f>"
+    - rid: 7292419838150443090
       type: {class: Dialogue, ns: , asm: Assembly-CSharp}
       data:
         delayBefore: 0
         checkInput: 1
         textTargetPath: Shinuchi
         direction: 0
-        Text: "\uC608. \uB9DE\uC2B5\uB2C8\uB2E4 \uB9C8\uB2D8. \uC5B4\uC11C \uB098\uC624\uC2DC\uC9C0\uC694."
-    - rid: 7292419771869167698
-      type: {class: Dialogue, ns: , asm: Assembly-CSharp}
+        Text: "\uC88B\uC544.<delay=0.2f> \uC678\uC6E0\uB2E4."
+    - rid: 7292419838150443091
+      type: {class: Emotion, ns: , asm: Assembly-CSharp}
       data:
         delayBefore: 0
-        checkInput: 1
-        textTargetPath: Shinuchi
-        direction: 2
-        Text: "\uC5B4\uBA38\uB2D8. \uC5EC\uAE30\uC11C \uBB50 \uD558\uC2ED\uB2C8\uAE4C?"
+        score: 20
+        clear: 1

@@ -6,21 +6,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
-/// <summary>
-/// 텍스트 박스 렌더링 전담 클래스
-/// 말풍선 구조: left | leftBorder | middle(stretch) | rightBorder | right
-/// </summary>
 public class TextBox : MonoBehaviour
 {
-    // ── 박스 레이아웃 ────────────────────────────────────────────
     [SerializeField] private float maxWidth = 600f;
 
-    // ── TMP ──────────────────────────────────────────────────────
     [SerializeField] private TextMeshPro textBox;
     private TMP_TextInfo textInfo;
     private Vector3[][] originalVertices;
 
-    // ── 출력 설정 ─────────────────────────────────────────────────
     [Header("출력 속도")]
     [SerializeField] public float fadeDuration = 0.01f;
     [SerializeField] public float moveDistance = 5f;
@@ -29,37 +22,26 @@ public class TextBox : MonoBehaviour
     [Header("사운드")]
     [SerializeField] private float talkSpeed = 1f;
 
-    // ── 특수효과 설정 ──────────────────────────────────────────────
     [Header("특수효과")]
-    [SerializeField] private float shakeIntensity = 1f;
+    [SerializeField] private float shakeIntensity = 0.1f;
     [SerializeField] private float upwnIntensity = 2f;
 
-    // ── 런타임 상태 ───────────────────────────────────────────────
     private int curIndex;
     private TextBoxData curData;
     private CancellationTokenSource showCTS;
     private CancellationTokenSource effectCTS;
 
-    // 상태 버퍼
-    private Vector3[] baseOffsets;    // Fade용
-    private Vector3[] effectOffsets;  // Shake/UpDown
+    private Vector3[] baseOffsets;
+    private Vector3[] effectOffsets;
     private float[] charAlpha;
-
-    // 랜덤 캐시 (Shake 안정화)
     private float[] randomPhase;
 
-    // ─────────────────────────────────────────────────────────────
     #region Unity Lifecycle
-
-    private void Awake()
-    {
-    }
 
     private void OnDestroy() => CancelAll();
 
     #endregion
 
-    // ─────────────────────────────────────────────────────────────
     #region Public API
 
     public async UniTask Init(TextBoxData data)
@@ -86,31 +68,20 @@ public class TextBox : MonoBehaviour
     public bool Skip()
     {
         if (curIndex >= textInfo.characterCount)
-        {
             return true;
-        }
-        else
-        {
-            letterShowDelay = 0;
-            return false;
-        }
+
+        letterShowDelay = 0;
+        return false;
     }
 
     #endregion
 
-    // ─────────────────────────────────────────────────────────────
     #region Init Helpers
 
     private void ApplyText(string text)
     {
+        textBox.textWrappingMode = TextWrappingModes.Normal;
         textBox.text = text;
-
-        // maxWidth 넘으면 줄바꿈, 아니면 한 줄
-        if (textBox.preferredWidth > maxWidth)
-            textBox.textWrappingMode = TextWrappingModes.Normal;
-        else
-            textBox.textWrappingMode = TextWrappingModes.NoWrap;
-
         textBox.ForceMeshUpdate();
         textBox.color = new Color32(255, 255, 255, 0);
     }
@@ -142,7 +113,6 @@ public class TextBox : MonoBehaviour
 
     #endregion
 
-    // ─────────────────────────────────────────────────────────────
     #region Text Animation
 
     private async UniTask PlayTextAnim()
@@ -154,8 +124,10 @@ public class TextBox : MonoBehaviour
         {
             if (token.IsCancellationRequested) return;
 
-            // 1. 딜레이
-            if (curData.delayAt != null && curData.delayAt.TryGetValue(curIndex, out int delayMs))
+            // 1. 커스텀 딜레이 (<delay=0.3f> 포함)
+            // ── 변경: int → float 으로 받아서 SafeDelay(float) 호출
+            if (curData.delayAt != null &&
+                curData.delayAt.TryGetValue(curIndex, out float delayMs))
             {
                 PlayTalkSound(delayMs).Forget();
                 await SafeDelay(delayMs, token);
@@ -170,11 +142,11 @@ public class TextBox : MonoBehaviour
                 PlayTalkSound((nextBreak - curIndex) * letterShowDelay).Forget();
             }
 
-            // 3. 화면 흔들림
+            // 3. 카메라 흔들림
             if (crumbleIndex < curData.crambleTiming.Length &&
                 curData.crambleTiming[crumbleIndex] == curIndex)
             {
-                // CameraManager.instance.CameraShake(0.07f, 0.1f);
+                EnvManager.Instance.CameraShake(0.07f, 0.1f);
                 crumbleIndex++;
             }
 
@@ -185,24 +157,46 @@ public class TextBox : MonoBehaviour
                 continue;
             }
 
-            // 5. 페이드인
-            await FadeInChar(curIndex, token);
-            if (token.IsCancellationRequested) return;
-
-            await SafeDelay(letterShowDelay, token);
+            // 6. 글자 간 딜레이
+            // ── 변경: speedRanges에서 현재 인덱스의 multiplier를 찾아 딜레이에 적용
+            float speedMul = GetSpeedMultiplier(curIndex);
+            await FadeInChar(curIndex, speedMul, token);        // speedMul 넘기기
+            await SafeDelay(letterShowDelay / speedMul, token);
         }
     }
 
-    private async UniTask FadeInChar(int index, CancellationToken token)
+    /// <summary>
+    /// speedRanges에서 charIndex에 해당하는 배율을 반환.
+    /// 해당 구간이 없으면 1.0f (기본 속도)
+    /// </summary>
+    private float GetSpeedMultiplier(int charIndex)
+    {
+        if (curData.speedRanges == null)
+        {
+            Debug.Log("speedRanges null"); // null이면 파싱 문제
+            return 1.0f;
+        }
+
+        foreach (var range in curData.speedRanges)
+        {
+            Debug.Log($"[{range.start}~{range.end}] mul={range.multiplier} / curIndex={charIndex}");
+            if (charIndex >= range.start && charIndex <= range.end)
+                return range.multiplier;
+        }
+        return 1.0f;
+    }
+
+    // FadeInChar에 speedMul 파라미터 추가
+    private async UniTask FadeInChar(int index, float speedMul, CancellationToken token)
     {
         float elapsed = 0f;
+        float duration = fadeDuration / speedMul;  // ← speed 반영
 
-        while (elapsed < fadeDuration)
+        while (elapsed < duration)
         {
             if (token.IsCancellationRequested) return;
 
-            float t = elapsed / fadeDuration;
-
+            float t = elapsed / duration;
             charAlpha[index] = t;
             baseOffsets[index] = new Vector3(0, Mathf.Lerp(-moveDistance, 0, t), 0);
 
@@ -216,7 +210,6 @@ public class TextBox : MonoBehaviour
 
     #endregion
 
-    // ─────────────────────────────────────────────────────────────
     #region Special Effects
 
     private void ApplyRangeEffect(TextRange[] ranges, System.Action<int, int> applyFn)
@@ -237,8 +230,8 @@ public class TextBox : MonoBehaviour
 
             float phase = randomPhase[i];
 
-            float ox = Mathf.Sin((time + phase) * 30f) * shakeIntensity;
-            float oy = Mathf.Cos((time + phase) * 30f) * shakeIntensity;
+            float ox = Mathf.Sin((time + phase) * 23f) * shakeIntensity;
+            float oy = Mathf.Sin((time + phase) * 17f) * shakeIntensity;
 
             effectOffsets[i] += new Vector3(ox, oy, 0);
         }
@@ -250,20 +243,21 @@ public class TextBox : MonoBehaviour
         {
             if (charAlpha[i] < 1f) continue;
 
-            float oy = Mathf.Sin((time + i) * 10f) * upwnIntensity;
+            // i * 0.5f → 글자 간 위상차를 작게 줘서 부드러운 파도 연출
+            float oy = Mathf.Sin(time * 3f + i * 0.5f) * upwnIntensity;
             effectOffsets[i] += new Vector3(0, oy, 0);
         }
     }
 
     #endregion
 
-    // ─────────────────────────────────────────────────────────────
     #region Sound
 
-    private async UniTask PlayTalkSound(int durationMs)
+    // ── 변경: durationMs를 float으로 통일
+    private async UniTask PlayTalkSound(float durationMs)
     {
         var token = showCTS.Token;
-        if (token.IsCancellationRequested || durationMs <= 0) return;
+        if (token.IsCancellationRequested || durationMs <= 0f) return;
 
         int total = Mathf.Max(1, Mathf.RoundToInt(durationMs / (letterShowDelay * talkSpeed)));
         int oneDelay = Mathf.RoundToInt(durationMs / total / 4f * 3f);
@@ -278,7 +272,6 @@ public class TextBox : MonoBehaviour
 
     #endregion
 
-    // ─────────────────────────────────────────────────────────────
     #region Mesh Helpers
 
     private async UniTask RenderLoop()
@@ -287,19 +280,15 @@ public class TextBox : MonoBehaviour
 
         while (!token.IsCancellationRequested)
         {
-            textBox.ForceMeshUpdate();
 
             float t = Time.time;
 
-            // effect 초기화
             for (int i = 0; i < effectOffsets.Length; i++)
                 effectOffsets[i] = Vector3.zero;
 
-            // 효과 적용
             ApplyRangeEffect(curData.shakeRanges, (s, e) => ApplyShake(s, e, t));
             ApplyRangeEffect(curData.upwnRanges, (s, e) => ApplyUpwn(s, e, t));
 
-            // vertex 반영
             for (int i = 0; i < textInfo.characterCount; i++)
             {
                 if (!textInfo.characterInfo[i].isVisible) continue;
@@ -321,14 +310,12 @@ public class TextBox : MonoBehaviour
             }
 
             textBox.UpdateVertexData(TMP_VertexDataUpdateFlags.All);
-
             await UniTask.Yield(PlayerLoopTiming.Update);
         }
     }
 
     #endregion
 
-    // ─────────────────────────────────────────────────────────────
     #region CTS Management
 
     private void CancelAll()
@@ -344,9 +331,18 @@ public class TextBox : MonoBehaviour
         effectCTS = new CancellationTokenSource();
     }
 
+    // int 버전 (기존 호환)
     private async UniTask SafeDelay(int ms, CancellationToken token)
     {
         try { await UniTask.Delay(ms, cancellationToken: token); }
+        catch (System.OperationCanceledException) { }
+    }
+
+    // ── 추가: float 버전 (speed 배율 적용 후 소수점 딜레이 처리)
+    private async UniTask SafeDelay(float ms, CancellationToken token)
+    {
+        int rounded = Mathf.Max(0, Mathf.RoundToInt(ms));
+        try { await UniTask.Delay(rounded, cancellationToken: token); }
         catch (System.OperationCanceledException) { }
     }
 

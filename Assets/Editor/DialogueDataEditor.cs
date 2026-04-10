@@ -44,15 +44,21 @@ public class DialogueDataEditor : Editor
                 case eventType.Dial:
                     Dialogue dial = evt as Dialogue;
                     dial.TextTarget = (GameObject)EditorGUILayout.ObjectField("Text Target", dial.TextTarget, typeof(GameObject), true);
-                    dial.Text = EditorGUILayout.TextField("Text", dial.Text);
-                    dial.direction = (CamDir)EditorGUILayout.EnumPopup("Direction", dial.direction); // 수정
+
+                    // 텍스트 필드를 여러 줄(TextArea)로 변경
+                    EditorGUILayout.LabelField("Text");
+                    // GUILayout.MinHeight(40)을 주면 기본적으로 2~3줄 정도의 높이가 확보되며, 글이 길어지면 자동으로 늘어납니다.
+                    // 더 높게 설정하고 싶다면 60 등으로 늘리시면 됩니다.
+                    dial.Text = EditorGUILayout.TextArea(dial.Text, EditorStyles.textArea, GUILayout.MinHeight(40));
+
+                    dial.direction = (CamDir)EditorGUILayout.EnumPopup("Direction", dial.direction);
                     dial.checkInput = EditorGUILayout.Toggle("Check Input", dial.checkInput);
                     break;
 
                 case eventType.ChoiceDial:
                     ChoiceDialogue choiceDial = evt as ChoiceDialogue;
                     choiceDial.TextTarget = (GameObject)EditorGUILayout.ObjectField("Text Target", choiceDial.TextTarget, typeof(GameObject), true);
-                    choiceDial.direction = (CamDir)EditorGUILayout.EnumPopup("Direction", choiceDial.direction); // 수정
+                    choiceDial.direction = (CamDir)EditorGUILayout.EnumPopup("Direction", choiceDial.direction);
 
                     EditorGUILayout.Space(5);
                     EditorGUILayout.LabelField("Choice 1", EditorStyles.boldLabel);
@@ -100,6 +106,13 @@ public class DialogueDataEditor : Editor
                     methodTrigger.commandName = (EventCommandType)EditorGUILayout.EnumPopup("Command", methodTrigger.commandName);
                     methodTrigger.commandParameter = EditorGUILayout.TextField("Command Parameter", methodTrigger.commandParameter);
                     break;
+
+                // [추가된 부분] Emotion 케이스 처리
+                case eventType.Emotion:
+                    Emotion emotion = evt as Emotion;
+                    emotion.score = EditorGUILayout.IntField("Score", emotion.score);
+                    emotion.clear = EditorGUILayout.Toggle("Clear", emotion.clear);
+                    break;
             }
 
             EditorGUILayout.BeginHorizontal();
@@ -139,6 +152,9 @@ public class DialogueDataEditor : Editor
     private void DrawAddButtons()
     {
         EditorGUILayout.LabelField("Add Event", EditorStyles.boldLabel);
+
+        // 버튼이 많아지면 UI가 잘릴 수 있으므로 줄바꿈 처리(Wrap)를 추가하거나 두 줄로 나누는 것이 좋습니다.
+        // 여기서는 기존 방식을 유지하되 Emotion을 맨 끝에 추가했습니다.
         EditorGUILayout.BeginHorizontal();
 
         if (GUILayout.Button("Dialogue"))
@@ -155,6 +171,10 @@ public class DialogueDataEditor : Editor
             data.dialogues.Add(new MethodTrigger());
         if (GUILayout.Button("Choice"))
             data.dialogues.Add(new ChoiceDialogue());
+
+        // [추가된 부분] Emotion 버튼 추가
+        if (GUILayout.Button("Emotion"))
+            data.dialogues.Add(new Emotion());
 
         EditorGUILayout.EndHorizontal();
     }
