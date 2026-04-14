@@ -73,3 +73,13 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+
+# Api Key
+Assets/Resources/ApiKeys.asset
+Assets/Resources/ApiKeys.asset.meta
+
+# AI Model
+Assets/StreamingAssets/Bert/*.sentis
+Assets/Plugins/Models/*.gguf
+Assets/Model/*.onnx
+Assets/Plugins/Windows/x86_64/*.dll

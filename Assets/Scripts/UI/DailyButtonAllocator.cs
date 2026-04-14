@@ -2,28 +2,38 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-public class DailyButtonAllocator : MonoBehaviour   //monobehaviour 나중에 지울듯
+public class DailyButtonAllocator : MonoBehaviour
 {
-    [SerializeField] List<DialogueData> manualData; //debug용 manual data
+    // ✅ 씬 이름 목록만 지정 (StreamingAssets/Dialogues/ 기준)
+    [SerializeField] private List<string> dialogueNames = new();
 
-    private DialogueData[] dialogues = new DialogueData[3];
+    private RuntimeDialogueData[] dialogues;
 
-    //debug
-    private void dataAlloc()
+    private async UniTaskVoid Start()
     {
-        for (int i = 0; i < 3; i++)
+        await LoadAll();
+    }
+
+    private async UniTask LoadAll()
+    {
+        dialogues = new RuntimeDialogueData[dialogueNames.Count];
+
+        for (int i = 0; i < dialogueNames.Count; i++)
         {
-            dialogues[i] = manualData[i];
+            dialogues[i] = await DialogueJsonLoader.LoadAsync(dialogueNames[i]);
+
+            if (dialogues[i] == null)
+                Debug.LogError($"[DailyButtonAllocator] {dialogueNames[i]} 로드 실패");
         }
+
+        Debug.Log($"✅ {dialogueNames.Count}개 다이얼로그 로드 완료");
     }
 
     public void OnClickButton(int buttonIdx)
     {
-        DialogueManager.Instance.StartEvent(dialogues[buttonIdx]).Forget();
-    }
+        if (dialogues == null || buttonIdx >= dialogues.Length) return;
+        if (dialogues[buttonIdx] == null) return;
 
-    private void Start()
-    {
-        dataAlloc();
+        DialogueManager.Instance.StartEvent(dialogues[buttonIdx]).Forget();
     }
 }

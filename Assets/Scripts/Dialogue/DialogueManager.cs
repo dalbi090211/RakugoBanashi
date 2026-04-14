@@ -4,7 +4,12 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Tilemaps;
+using UnityEngine.UI;
+
+using Random = UnityEngine.Random;
 
 /// <summary>
 /// 대화 관리 매니저 (테스트용 간소화 버전)
@@ -14,13 +19,16 @@ using UnityEngine;
 /// </summary>
 public class DialogueManager : Singleton<DialogueManager>
 {
-
     // ── References ───────────────────────────────────────────────
     [SerializeField] private GameObject talkUI;
     [SerializeField] private ButtonMapper titleManager;
     [SerializeField] private ChoiceEventManager choiceManager;
+    [SerializeField] private EndingChoiceManager endingChoiceManager;
+    [SerializeField] private MakuraStarter makuraStarter;
     [SerializeField] private TextBox leftTextBox;
     [SerializeField] private TextBox rightTextBox;
+    [SerializeField] private TextBox middleTextBox;
+    [SerializeField] private GameObject textTarget;
 
     // ── 설정 ─────────────────────────────────────────────────────
     [Header("딜레이")]
@@ -29,9 +37,24 @@ public class DialogueManager : Singleton<DialogueManager>
     // ── 런타임 상태 ───────────────────────────────────────────────
     private DialogueData curTalkData;
     private DialogueData appendData;
+    private RuntimeDialogueData curRuntimeData;
     private bool eventLock;
-    private bool curLeft = false;
+    private CamDir curDir = CamDir.middle;
     private EventCommandInvoker eventCommandInvoker = new EventCommandInvoker();
+    [SerializeField] private GameObject winObj1;
+    [SerializeField] private GameObject winObj2;
+    [SerializeField] private GameObject loseObj1;
+    [SerializeField] private GameObject loseObj2;
+    [SerializeField] private Animator animator;
+
+
+    // ── 몰입도 시스템 ───────────────────────────────────────────────
+    private const int flowMax = 100;
+    private int curFlow = 0;
+    private int flowBench = 50;
+    [SerializeField] private Slider flowSlider;
+    [SerializeField] private float gaugeShowDelay = 1.2f;
+    float fillDuration = 2.0f;
 
     // ─────────────────────────────────────────────────────────────
     #region Unity Lifecycle
@@ -39,6 +62,7 @@ public class DialogueManager : Singleton<DialogueManager>
     protected override void Awake()
     {
         base.Awake();
+        flowSlider.gameObject.SetActive(false);
     }
 
     private void Update()
@@ -53,15 +77,162 @@ public class DialogueManager : Singleton<DialogueManager>
     // ─────────────────────────────────────────────────────────────
     #region Public API
 
-    public async UniTask StartEvent(DialogueData data)
+    public async UniTask ShowText(string text, CamDir direction)
     {
-        if (data == null) { Debug.LogError("DialogueData가 null입니다."); return; }
+        TextBoxData data = BuildTextBoxData(text);
+        float cvtTime = 1f;
+
+        setAnim(dirToTalkState(direction)); // 말하기 시작
+
+        if (direction == CamDir.left)
+        {
+            rightTextBox.Hide();
+            middleTextBox.Hide();
+            EnvManager.Instance.SetLeftVCam(cvtTime).Forget();
+            await leftTextBox.Init(data);
+        }
+        else if (direction == CamDir.right)
+        {
+            leftTextBox.Hide();
+            middleTextBox.Hide();
+            EnvManager.Instance.SetRightVCam(cvtTime).Forget();
+            await rightTextBox.Init(data);
+        }
+        else
+        {
+            leftTextBox.Hide();
+            rightTextBox.Hide();
+            EnvManager.Instance.SetMiddleVCam(cvtTime).Forget();
+            await middleTextBox.Init(data);
+        }
+
+        setAnim(1); // idle로 복귀
+        await UniTask.Delay(TimeSpan.FromSeconds(textShowDelay));
+    }
+
+    private async UniTask showFlowSliderFill(int flow)
+    {
+        flowSlider.gameObject.SetActive(true);
+        flowSlider.maxValue = flowMax;
+        flowSlider.value = curFlow;
+
+        int targetFlow = Mathf.Clamp(curFlow + flow, 0, flowMax);
+        float elapsed = 0f;
+        float startValue = curFlow;
+
+        while (elapsed < fillDuration)
+        {
+            elapsed += Time.deltaTime;
+            flowSlider.value = Mathf.Lerp(startValue, targetFlow, elapsed / fillDuration);
+            await UniTask.Yield();
+        }
+
+        flowSlider.value = targetFlow;
+        curFlow = targetFlow;
+    }
+
+    private async UniTask startFlowResult(int flow)
+    {
+        await UniTask.Delay(TimeSpan.FromSeconds(gaugeShowDelay));
+        await showFlowSliderFill(flow);
+        await UniTask.Delay(TimeSpan.FromSeconds(gaugeShowDelay));
+        flowSlider.gameObject.SetActive(false);
+    }
+
+    private async UniTask emotionTask(int score, bool clear)
+    {
+        rightTextBox.Hide();
+        leftTextBox.Hide();
+        middleTextBox.Hide();
+        EnvManager.Instance.SetEnvVCam(1.0f).Forget();
+        Debug.Log($"점수: {score}");
+        makuraStarter.setInputField(false);
+        startEmotion(clear).Forget();
+        await startFlowResult(score);
+        await UniTask.Delay(TimeSpan.FromSeconds(1.5f));
+    }
+
+    private async UniTask startEmotion(bool clear)
+    {
+        await UniTask.Delay(TimeSpan.FromSeconds(1.5f));
+        if (clear)
+        {
+            await spawnEmotions(winObj1, winObj2);
+        }
+        else
+        {
+            await spawnEmotions(loseObj1, loseObj2);
+        }
+    }
+
+    private async UniTask spawnEmotions(GameObject obj1, GameObject obj2)
+    {
+        int count = 20;
+
+        for (int i = 0; i < count; i++)
+        {
+            float x = Random.Range(-5.84f, 5.84f);
+            float y = Random.Range(-2.5f, -1.6f);
+            Vector3 pos = new Vector3(x, y, 0f);
+
+            GameObject prefab = Random.value > 0.5f ? obj1 : obj2;
+            Instantiate(prefab, pos, Quaternion.identity);
+
+            await UniTask.Delay(TimeSpan.FromMilliseconds(80));
+        }
+    }
+
+    // ✅ RuntimeDialogueData 오버로드 추가
+    public async UniTask StartEvent(RuntimeDialogueData data)
+    {
+        if (data == null) { Debug.LogError("RuntimeDialogueData가 null입니다."); return; }
+
+        curRuntimeData = data;
+        curFlow = 30;
+        flowSlider.value = curFlow / flowMax;
         titleManager.TitleOff();
         await EnvManager.Instance.SetBrightEnv(2.0f);
         await UniTask.Delay(TimeSpan.FromSeconds(1.5f));
         await EnvManager.Instance.SetBrightSpotLight(0f);
+
+        await UniTask.Delay(TimeSpan.FromSeconds(1f));
+        await makuraStarter.fillInputField(data.sceneName);
+        await UniTask.Delay(TimeSpan.FromSeconds(2f));
+        makuraStarter.setInputField(true);
+        MakuraResult result = await makuraStarter.InputAwait(data.sceneName);
+        if (result == null) { Debug.LogError("AI 평가 실패"); return; }
+
+        await UniTask.Delay(TimeSpan.FromSeconds(0.6f));
+        await emotionTask(result.score, result.score > 0);
+        await TimeLineEvent(data.dialogues);  // ✅ 리스트 직접 전달
+        await EnvManager.Instance.SetDarkEnv(2.0f);
+        await EnvManager.Instance.SetOffSpotLight(0f);
+        titleManager.TitleOn();
+    }
+
+    // ✅ 기존 StartEvent도 TimeLineEvent 시그니처 맞게 수정
+    public async UniTask StartEvent(DialogueData data)
+    {
+        if (data == null) { Debug.LogError("DialogueData가 null입니다."); return; }
+
         curTalkData = data;
-        await TimeLineEvent();
+        curFlow = 30;
+        flowSlider.value = curFlow / flowMax;
+        titleManager.TitleOff();
+        await EnvManager.Instance.SetBrightEnv(2.0f);
+        await UniTask.Delay(TimeSpan.FromSeconds(1.5f));
+        await EnvManager.Instance.SetBrightSpotLight(0f);
+
+        await UniTask.Delay(TimeSpan.FromSeconds(1f));
+        await makuraStarter.fillInputField(data.sceneName);
+        await UniTask.Delay(TimeSpan.FromSeconds(2f));
+        makuraStarter.setInputField(true);
+        MakuraResult result = await makuraStarter.InputAwait(data.sceneName);
+        if (result == null) { Debug.LogError("AI 평가 실패"); return; }
+
+        await UniTask.Delay(TimeSpan.FromSeconds(0.6f));
+        await emotionTask(result.score, result.score > 0);
+        await TimeLineEvent(data.dialogues);  // ✅ 리스트 직접 전달
         await EnvManager.Instance.SetDarkEnv(2.0f);
         await EnvManager.Instance.SetOffSpotLight(0f);
         titleManager.TitleOn();
@@ -77,25 +248,21 @@ public class DialogueManager : Singleton<DialogueManager>
         if (!eventLock) return;
 
         bool isDone;
-        if (curLeft)
-        {
+        if (curDir == CamDir.left)
             isDone = leftTextBox.Skip();
-        }
-        else
-        {
+        else if (curDir == CamDir.right)
             isDone = rightTextBox.Skip();
-        }
+        else
+            isDone = middleTextBox.Skip();
 
         if (isDone)
         {
-            if (curLeft)
-            {
+            if (curDir == CamDir.left)
                 leftTextBox.Hide();
-            }
-            else
-            {
+            else if (curDir == CamDir.right)
                 rightTextBox.Hide();
-            }
+            else
+                middleTextBox.Hide();
             eventLock = false;
         }
     }
@@ -105,11 +272,14 @@ public class DialogueManager : Singleton<DialogueManager>
     // ─────────────────────────────────────────────────────────────
     #region Timeline
 
-    private async UniTask TimeLineEvent()
+    // ✅ TimeLineEvent: List<GameEvent> 파라미터로 변경
+    private async UniTask TimeLineEvent(List<GameEvent> initialEvents)
     {
-        for (int i = 0; i < curTalkData.dialogues.Count; i++)
+        var queue = new List<GameEvent>(initialEvents);
+
+        for (int i = 0; i < queue.Count; i++)
         {
-            var ev = curTalkData.dialogues[i];
+            var ev = queue[i];
             await UniTask.Delay(TimeSpan.FromSeconds(ev.delayBefore));
 
             switch (ev.Type)
@@ -117,29 +287,41 @@ public class DialogueManager : Singleton<DialogueManager>
                 case eventType.Dial:
                     var dialogue = ev as Dialogue;
                     eventLock = dialogue.checkInput;
-                    curLeft = dialogue.isLeft;
+                    curDir = dialogue.direction;
 
                     TextBoxData data = BuildTextBoxData(dialogue.Text);
+                    setAnim(dirToTalkState(dialogue.direction));
 
-                    if (dialogue.isLeft)
+                    if (dialogue.direction == CamDir.left)
                     {
                         rightTextBox.Hide();
+                        middleTextBox.Hide();
                         EnvManager.Instance.SetLeftVCam(1f).Forget();
                         await leftTextBox.Init(data);
+                    }
+                    else if (dialogue.direction == CamDir.right)
+                    {
+                        leftTextBox.Hide();
+                        middleTextBox.Hide();
+                        EnvManager.Instance.SetRightVCam(1f).Forget();
+                        await rightTextBox.Init(data);
                     }
                     else
                     {
                         leftTextBox.Hide();
-                        EnvManager.Instance.SetRightVCam(1f).Forget();
-                        await rightTextBox.Init(data);
+                        rightTextBox.Hide();
+                        EnvManager.Instance.SetMiddleVCam(1f).Forget();
+                        await middleTextBox.Init(data);
                     }
+
+                    setAnim(1);
                     await UniTask.Delay(TimeSpan.FromSeconds(textShowDelay));
                     SkipText();
                     break;
 
                 case eventType.Anim:
                     var anim = ev as Animation;
-                    anim.AnimTarget.GetComponent<Animator>().Play(anim.animationName);
+                    textTarget.GetComponent<Animator>().Play(anim.animationName);
                     break;
 
                 case eventType.Event:
@@ -152,31 +334,77 @@ public class DialogueManager : Singleton<DialogueManager>
                     var choiceDial = ev as ChoiceDialogue;
                     rightTextBox.Hide();
                     leftTextBox.Hide();
-                    if (choiceDial.isLeft)
-                    {
+                    middleTextBox.Hide();
+                    EnvManager.Instance.SetDOF(true);
+                    if (choiceDial.direction == CamDir.left)
                         await EnvManager.Instance.SetLeftVCam(1f);
-                    }
-                    else
-                    {
+                    else if (choiceDial.direction == CamDir.right)
                         await EnvManager.Instance.SetRightVCam(1f);
-                    }
+                    else
+                        await EnvManager.Instance.SetMiddleVCam(1f);
 
-                    choiceManager.ShowChoice(choiceDial);
-                    await choiceManager.TimerTask();
+                    choiceRes selected = await choiceManager.ShowChoice(choiceDial);
+
+                    // ✅ RuntimeDialogueData branches 우선, 없으면 구 appendData 방식 폴백
+                    if (!string.IsNullOrEmpty(selected.appendDialPath))
+                    {
+                        if (curRuntimeData?.branches.TryGetValue(
+                                selected.appendDialPath, out var branch) == true)
+                        {
+                            queue.InsertRange(i + 1, branch);
+                        }
+                        else
+                        {
+                            // 기존 ScriptableObject 방식 폴백 (마이그레이션 완료 전까지)
+                            Debug.LogWarning(
+                                $"branch 없음: {selected.appendDialPath}");
+                        }
+                    }
+                    EnvManager.Instance.SetDOF(false);
+                    break;
+
+                case eventType.Emotion:
+                    var emotionDial = ev as Emotion;
+                    await emotionTask(emotionDial.score, emotionDial.clear);
+                    break;
+
+                case eventType.AppendDial:
+                    var appendDial = ev as AppendDial;
+                    if (appendDial.events?.Count > 0)
+                        queue.InsertRange(i + 1, appendDial.events);
+                    break;
+
+                case eventType.EndingChoice:
+                    var endingChoice = ev as EndingChoice;
+                    rightTextBox.Hide();
+                    leftTextBox.Hide();
+                    middleTextBox.Hide();
+                    EnvManager.Instance.SetEnvVCam(1f).Forget();
+
+                    endingRes selectedEnding = await endingChoiceManager.ShowEnding(
+                        endingChoice, curFlow);  // curFlow 넘겨서 조건 체크
+
+                    if (!string.IsNullOrEmpty(selectedEnding.branchId)
+                        && curRuntimeData?.branches.TryGetValue(
+                            selectedEnding.branchId, out var endingBranch) == true)
+                    {
+                        queue.InsertRange(i + 1, endingBranch);
+                    }
                     break;
             }
 
             if (eventLock)
                 await UniTask.WaitUntil(() => !eventLock);
+
+            // 구 appendData 방식 폴백 (마이그레이션 완료 후 제거)
+            if (appendData != null)
+            {
+                queue.InsertRange(i + 1, appendData.dialogues);
+                appendData = null;
+            }
         }
 
-        if (appendData != null)
-        {
-            curTalkData = appendData;
-            appendData = null;
-            await TimeLineEvent();
-        }
-        EnvManager.Instance.SetMiddleVCam(1f).Forget();
+        EnvManager.Instance.SetEnvVCam(1f).Forget();
         CleanUp();
     }
 
@@ -195,37 +423,45 @@ public class DialogueManager : Singleton<DialogueManager>
     {
         string text = rawText;
 
-        // 1. 단순 타이밍 태그 파싱
         int[] cramble;
-        int[] delayArr;
         (text, cramble) = Common.removeTag(text, "<cramble>");
-        (text, delayArr) = Common.removeTag(text, "<delay>");
 
-        // 2. 구간 태그 파싱
+        // <delay> 고정값 + <delay=0.3f> 커스텀값 병합
+        int[] delayFixed;
+        Dictionary<int, float> delayCustom;
+        (text, delayFixed) = Common.removeTag(text, "<delay>");
+        (text, delayCustom) = Common.removeParamTag(text, "delay");
+
+        // speed 태그: 구간 태그로 처리 (시작~끝 인덱스 + 배율)
+        SpeedRange[] speedRanges;
+        (text, speedRanges) = Common.removeParamRangeTag(text, "speed");
+
         TextRange[] shakeRanges;
         TextRange[] upwnRanges;
         (text, shakeRanges) = Common.removeTag(text, "<shake>", "</shake>");
         (text, upwnRanges) = Common.removeTag(text, "<upwn>", "</upwn>");
 
-        // 3. delayArr → Dictionary<index, ms>
-        //    동일 인덱스에 <delay>가 여러 개면 누적
-        var delayAt = new Dictionary<int, int>();
-        foreach (int idx in delayArr)
+        // 고정 delay + 커스텀 delay 병합
+        var delayAt = new Dictionary<int, float>();
+        foreach (int idx in delayFixed)
         {
             if (delayAt.ContainsKey(idx)) delayAt[idx] += letterDelay;
             else delayAt[idx] = letterDelay;
         }
+        foreach (var kv in delayCustom)
+        {
+            if (delayAt.ContainsKey(kv.Key)) delayAt[kv.Key] += kv.Value;
+            else delayAt[kv.Key] = kv.Value;
+        }
 
-        // 4. 효과음 끊김 포인트 (쉼표/마침표 위치)
         Queue<int> soundBreaks = Common.nextEscape(
             Common.rich2normal(text), escapeType.comma);
-
-        Common.AddNewLine(ref text);
 
         return new TextBoxData
         {
             parsedText = text,
-            delayAt = delayAt,
+            delayAt = delayAt,       // float으로 변경
+            speedRanges = speedRanges,   // 추가
             soundBreaks = soundBreaks,
             shakeRanges = shakeRanges,
             upwnRanges = upwnRanges,
@@ -237,11 +473,33 @@ public class DialogueManager : Singleton<DialogueManager>
 
     // ─────────────────────────────────────────────────────────────
     #region Cleanup
-
     private void CleanUp()
     {
         curTalkData = null;
+        curRuntimeData = null; // ✅ 추가
+        appendData = null;
         eventLock = false;
+        setAnim(1);
+    }
+    #endregion
+
+    // ─────────────────────────────────────────────────────────────
+    #region Animator
+
+    private void setAnim(int parameter)
+    {
+        if (animator == null) return;
+        animator.SetInteger("curState", parameter);
+    }
+
+    private int dirToTalkState(CamDir dir)
+    {
+        return dir switch
+        {
+            CamDir.left => 3,
+            CamDir.right => 4,
+            _ => 2,   // middle → 정면
+        };
     }
 
     #endregion
