@@ -1,7 +1,9 @@
 # AI Model
 
-https://drive.google.com/drive/folders/1A-2P6TddfZdUgIfjxizp_5l1Mtzx6n1e?usp=sharing 에서 모델, dll 파일을 다운로드 받아서\n
-model_sentis 파일은 Assets/StreamingAssets/Bert 에 압축해제\n
-model_sentis_serialize 파일은 Assets/Plugins/Models 에 압축해제\n
-mdoel 파일은 Assets/Model 에 압축해제\n
-dll 파일은 Assets/Plugins/Windows/x86_64 에 압축해제\n
+https://drive.google.com/drive/folders/1A-2P6TddfZdUgIfjxizp_5l1Mtzx6n1e?usp=sharing 에서 모델, dll 파일을 다운<br>
+
+model_sentis.zip - Assets/StreamingAssets/Bert<br>
+model_sentis_serialize.zip - Assets/Plugins/Models<br>
+mdoel.zip - Assets/Model<br>
+dll.zip - Assets/Plugins/Windows/x86_64<br>
+압축해제 후 사용.
