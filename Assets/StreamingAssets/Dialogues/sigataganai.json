@@ -1,0 +1,566 @@
+﻿{
+  "sceneName": "시가타가나이",
+  "dialogues": [
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "세상에는 두 종류의 사람이 있습니다.<delay=0.5f>",
+      "direction": "middle",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "위험 앞에서 맞서는 사람,<delay=0.4f> 그리고 위험 앞에서 <shake>죽은 척하는 사람.</shake><delay=0.6f>",
+      "direction": "middle",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "오늘 이야기의 주인공은 물론,<delay=0.3f> 후자입니다.<delay=0.6f>",
+      "direction": "middle",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "구로베라는 사내가 있었습니다.<delay=0.4f> 소심하기로는 동네에서 둘째가라면 서러운 사람이었지요.<delay=0.5f>",
+      "direction": "middle",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "어느 밤,<delay=0.3f> 구로베는 혼자 산길을 걷고 있었습니다.<delay=0.5f>",
+      "direction": "middle",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "그때 수풀에서 인기척이 들렸습니다.<delay=0.6f>",
+      "direction": "middle",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "구로베는 생각했습니다.<delay=0.3f>",
+      "direction": "middle",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "\"도둑이다.<delay=0.5f> <shake>분명히 도둑이야.</shake><delay=0.4f> 어떡하지, 어떡하지...\"<delay=0.8f>",
+      "direction": "left",
+      "checkInput": true
+    },
+    {
+      "type": "ChoiceDial",
+      "delayBefore": 0.0,
+      "direction": "left",
+      "choices": [
+        { "text": "(죽은 척 바닥에 쓰러진다)",    "branchId": "시가타가나이/1" },
+        { "text": "(모르는 척 휘파람을 분다)",     "branchId": "시가타가나이/2" },
+        { "text": "(냅다 도망친다)",               "branchId": "시가타가나이/3" }
+      ]
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "수풀에서 나타난 건 도둑이 맞았습니다.<delay=0.5f>",
+      "direction": "middle",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "도둑은 바닥에 쓰러진 구로베를 내려다봤습니다.<delay=0.5f>",
+      "direction": "middle",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "\"이거 운이 좋군.<delay=0.4f> 죽어있는 놈 돈이라도 털어가야겠다.\"<delay=0.6f>",
+      "direction": "right",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "구로베는 속으로 비명을 질렀습니다.<delay=0.4f>",
+      "direction": "middle",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "도둑이 구로베의 품을 뒤지기 시작했습니다.<delay=0.5f>",
+      "direction": "middle",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "\"이봐,<delay=0.3f> 진짜 아무것도 없네.<delay=0.4f> 이 사람 빈털터리잖아.\"<delay=0.6f>",
+      "direction": "right",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "도둑이 혀를 차며 중얼거렸습니다.<delay=0.4f>",
+      "direction": "middle",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "\"죽은 놈도 아니고 빈 놈이라니.<delay=0.5f> 재수 없어.\"<delay=0.8f>",
+      "direction": "right",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "도둑이 툭툭 털고 일어서려는 순간,<delay=0.5f>",
+      "direction": "middle",
+      "checkInput": true
+    },
+    {
+      "type": "ChoiceDial",
+      "delayBefore": 0.0,
+      "direction": "left",
+      "choices": [
+        { "text": "(계속 죽은 척 버틴다)",          "branchId": "시가타가나이/4" },
+        { "text": "(너무 무서워서 눈이 떠진다)",    "branchId": "시가타가나이/5" },
+        { "text": "(배가 고파서 꼬르륵 소리가 난다)", "branchId": "시가타가나이/6" }
+      ]
+    },
+    {
+      "type": "EndingChoice",
+      "delayBefore": 0.0,
+      "endings": [
+        { "title": "끝까지 죽은 척 성공한다",     "branchId": "시가타가나이/ending1", "requiredFlow": 70 },
+        { "title": "도둑과 협상을 벌인다",         "branchId": "시가타가나이/ending2", "requiredFlow": 40 },
+        { "title": "도둑에게 들켜버린다",           "branchId": "시가타가나이/ending3", "requiredFlow": 20 },
+        { "title": "도둑과 함께 도망친다",          "branchId": "시가타가나이/ending4", "requiredFlow": 0  }
+      ]
+    }
+  ],
+  "branches": {
+    "시가타가나이/1": [
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "구로베는 그 자리에 풀썩 쓰러졌습니다.<delay=0.5f>",
+        "direction": "middle",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "눈을 꼭 감고,<delay=0.3f> 숨도 참고,<delay=0.3f> 손발도 축 늘어뜨렸습니다.<delay=0.5f>",
+        "direction": "left",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "스스로 생각해도 꽤 그럴듯했습니다.<delay=0.5f>",
+        "direction": "left",
+        "checkInput": true
+      },
+      {
+        "type": "Emotion",
+        "delayBefore": 0.0,
+        "score": 20,
+        "clear": true
+      }
+    ],
+    "시가타가나이/2": [
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "구로베는 아무것도 모르는 척,<delay=0.3f> 휘파람을 불기 시작했습니다.<delay=0.5f>",
+        "direction": "left",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "그런데 너무 긴장한 나머지,<delay=0.4f> <shake>소리가 전혀 나오지 않았습니다.</shake><delay=0.6f>",
+        "direction": "left",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "결국 그냥 바닥에 쓰러졌습니다.<delay=0.4f>",
+        "direction": "middle",
+        "checkInput": true
+      },
+      {
+        "type": "Emotion",
+        "delayBefore": 0.0,
+        "score": 10,
+        "clear": true
+      }
+    ],
+    "시가타가나이/3": [
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "구로베는 냅다 달리기 시작했습니다.<delay=0.5f>",
+        "direction": "left",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "그런데 세 걸음도 못 가서 돌에 걸려 넘어졌습니다.<delay=0.5f>",
+        "direction": "middle",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "결국 쓰러진 채로 죽은 척을 하게 됐습니다.<delay=0.5f>",
+        "direction": "left",
+        "checkInput": true
+      },
+      {
+        "type": "Emotion",
+        "delayBefore": 0.0,
+        "score": -10,
+        "clear": false
+      }
+    ],
+    "시가타가나이/4": [
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "구로베는 이를 악물었습니다.<delay=0.4f>",
+        "direction": "left",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "죽은 사람은 움직이지 않는다.<delay=0.3f> 죽은 사람은 숨도 안 쉰다.<delay=0.3f> 죽은 사람은...<delay=0.5f>",
+        "direction": "left",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "배가 고프지 않다.<delay=0.8f>",
+        "direction": "left",
+        "checkInput": true
+      },
+      {
+        "type": "Emotion",
+        "delayBefore": 0.0,
+        "score": 20,
+        "clear": true
+      }
+    ],
+    "시가타가나이/5": [
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "너무 무서운 나머지,<delay=0.4f> 눈이 저절로 떠졌습니다.<delay=0.5f>",
+        "direction": "middle",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "도둑과 눈이 딱 마주쳤습니다.<delay=0.8f>",
+        "direction": "middle",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "구로베는 다시 눈을 꼭 감았습니다.<delay=0.5f>",
+        "direction": "left",
+        "checkInput": true
+      },
+      {
+        "type": "Emotion",
+        "delayBefore": 0.0,
+        "score": -5,
+        "clear": false
+      }
+    ],
+    "시가타가나이/6": [
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "하필 그 순간,<delay=0.4f> <shake>뱃속에서 꼬르륵 소리가 났습니다.</shake><delay=0.6f>",
+        "direction": "middle",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "도둑이 멈췄습니다.<delay=0.8f>",
+        "direction": "middle",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "구로베는 속으로 외쳤습니다.<delay=0.3f>",
+        "direction": "middle",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "\"죽은 사람 배에서 왜 소리가 나는 거야!\"<delay=0.8f>",
+        "direction": "left",
+        "checkInput": true
+      },
+      {
+        "type": "Emotion",
+        "delayBefore": 0.0,
+        "score": -15,
+        "clear": false
+      }
+    ],
+
+    "시가타가나이/ending1": [
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "도둑은 한참을 구로베를 내려다보다가,<delay=0.5f> 결국 발길을 돌렸습니다.<delay=0.5f>",
+        "direction": "middle",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "발소리가 완전히 사라지고 나서야,<delay=0.5f> 구로베는 눈을 떴습니다.<delay=0.5f>",
+        "direction": "middle",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "그리고 천천히 일어나,<delay=0.3f> 아무 일도 없었다는 듯 집으로 향했습니다.<delay=0.5f>",
+        "direction": "left",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "다음 날 아침,<delay=0.3f> 구로베는 이웃에게 말했습니다.<delay=0.4f>",
+        "direction": "middle",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "\"어제 도둑을 만났는데 내가 한 방에 제압했지.\"<delay=0.8f>",
+        "direction": "left",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "<speed=0.6f>죽은 척이 제압인지는 모르겠지만,<delay=0.5f> 구로베는 그렇게 믿었습니다.</speed>",
+        "direction": "middle",
+        "checkInput": true
+      }
+    ],
+
+    "시가타가나이/ending2": [
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "구로베는 눈을 번쩍 뜨며 말했습니다.<delay=0.4f>",
+        "direction": "middle",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "\"잠깐.<delay=0.5f> 나 살아있어.\"<delay=0.8f>",
+        "direction": "left",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "도둑이 뒤로 물러섰습니다.<delay=0.4f>",
+        "direction": "middle",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "\"알고 있었는데?\"<delay=0.6f>",
+        "direction": "right",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "구로베가 제안했습니다.<delay=0.3f>",
+        "direction": "middle",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "\"그럼 이렇게 하자.<delay=0.4f> 나도 돈 없고 너도 얻은 거 없으니,<delay=0.4f> 그냥 각자 집에 가는 거야.\"<delay=0.8f>",
+        "direction": "left",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "도둑이 잠시 생각하더니 말했습니다.<delay=0.4f>",
+        "direction": "middle",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "\"...그게 낫겠다.\"<delay=1.0f>",
+        "direction": "right",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "<speed=0.6f>둘은 아무 말 없이 반대 방향으로 걸어갔습니다.<delay=0.5f> 세상에서 제일 이상한 협상이었습니다.</speed>",
+        "direction": "middle",
+        "checkInput": true
+      }
+    ],
+
+    "시가타가나이/ending3": [
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "도둑이 구로베의 귀에 대고 속삭였습니다.<delay=0.5f>",
+        "direction": "middle",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "\"야.<delay=0.5f> 숨 쉬고 있잖아.\"<delay=0.8f>",
+        "direction": "right",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "구로베는 더욱 숨을 참았습니다.<delay=0.5f>",
+        "direction": "left",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "\"눈 떨리고 있거든.\"<delay=0.8f>",
+        "direction": "right",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "구로베는 눈에 힘을 줬습니다.<delay=0.5f>",
+        "direction": "left",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "\"손도 떨리고 있고.\"<delay=0.8f>",
+        "direction": "right",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "구로베가 눈을 번쩍 떴습니다.<delay=0.5f>",
+        "direction": "middle",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "\"...시가타가나이.\"<delay=1.0f>",
+        "direction": "left",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "<speed=0.6f>어쩔 수 없다는 말이,<delay=0.5f> 이렇게 잘 어울리는 상황도 없었습니다.</speed>",
+        "direction": "middle",
+        "checkInput": true
+      }
+    ],
+
+    "시가타가나이/ending4": [
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "그때 멀리서 포졸 소리가 들렸습니다.<delay=0.6f>",
+        "direction": "middle",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "도둑이 당황했습니다.<delay=0.4f>",
+        "direction": "middle",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "\"야,<delay=0.3f> 일어나.<delay=0.3f> 같이 도망가자.\"<delay=0.6f>",
+        "direction": "right",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "구로베가 눈을 떴습니다.<delay=0.4f>",
+        "direction": "middle",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "\"왜 나랑 같이 도망가?\"<delay=0.6f>",
+        "direction": "left",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "\"넌 방금 죽은 척했잖아.<delay=0.4f> 포졸한테 들키면 나랑 공범이야.\"<delay=0.8f>",
+        "direction": "right",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "<speed=0.6f>구로베는 그날 밤,<delay=0.5f> 도둑과 함께 산을 넘었습니다.<delay=0.5f> 도망친 적 없는 사람이,<delay=0.4f> 도둑과 함께 도망치는 건 처음이었습니다.</speed>",
+        "direction": "middle",
+        "checkInput": true
+      }
+    ]
+  }
+}

@@ -1,0 +1,188 @@
+﻿{
+  "sceneName": "수한무",
+  "dialogues": [
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "어느 날,<delay=0.2f> 서 대감 댁에 경사가 났습니다.<delay=0.4f>",
+      "direction": "middle",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "5대 독자가 태어난 것이지요.<delay=0.5f>",
+      "direction": "middle",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "서 대감은 당장 유명한 점쟁이를 찾아갔습니다.<delay=0.4f>",
+      "direction": "middle",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "\"선생,<delay=0.3f> 우리 아이가 <speed=0.6f>천년만년</speed> 살 수 있는 이름을 지어주시오.\"<delay=0.5f>",
+      "direction": "left",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "점쟁이가 말했습니다.<delay=0.3f>",
+      "direction": "middle",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "\"좋습니다.<delay=0.4f> <speed=0.7f>장수를 뜻하는 이름을 모조리 붙여드리지요.</speed><delay=0.3f> 단,<delay=0.2f> <shake>한 글자라도 빠뜨리면...</shake><delay=0.6f> 그 수명도 함께 빠집니다.\"<delay=0.6f>",
+      "direction": "right",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "그리하여 태어난 이름이...<delay=0.8f>",
+      "direction": "middle",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "<speed=1.5f>수한무 <cramble>거북이와 두루미 삼천갑자 <cramble>동방삭 치치카포 사리사리센타 <cramble>워리워리 세브리깡 무두셀라 구름이 <cramble>허리케인 담벼락 서생원 <cramble>고양이 바둑이 돌돌이.</speed><delay=1.0f>",
+      "direction": "middle",
+      "checkInput": true
+    },
+    {
+      "type": "ChoiceDial",
+      "delayBefore": 0.0,
+      "direction": "left",
+      "choices": [
+        { "text": "(몇 번이고 속으로 되뇐다)",  "branchId": "수한무/1" },
+        { "text": "(한 번 중얼거려본다)",        "branchId": "수한무/2" },
+        { "text": "(너무 길어서 포기한다)",      "branchId": "수한무/3" }
+      ]
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "어느 날,<delay=0.2f> 아이가 <shake>우물에 빠졌습니다.</shake><delay=0.5f>",
+      "direction": "middle",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "친구가 허겁지겁 하인을 찾아가 외쳤습니다.<delay=0.3f>",
+      "direction": "middle",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "\"아저씨!<delay=0.2f> <speed=1.5f>수한무가 우물에 빠졌어요!</speed>\"<delay=0.5f>",
+      "direction": "left",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "하인이 눈을 부릅뜨며 말했습니다.<delay=0.3f>",
+      "direction": "middle",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "\"<speed=0.8f>도련님 함자를 함부로 줄여 부르면 못쓰지!</speed><delay=0.4f> <shake>풀네임으로 다시!</shake>\"<delay=0.6f>",
+      "direction": "right",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "\"<speed=1.5f>수한무 거북이와 두루미 삼천갑자 동방삭 치치카포 사리사리센타 워리워리 세브리깡 무두셀라 구름이 허리케인 담벼락 서생원 고양이 바둑이 돌돌이</speed>가 우물에 빠졌어요!!\"<delay=0.6f>",
+      "direction": "left",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "하인이 고개를 끄덕이며 말했습니다.<delay=0.3f>",
+      "direction": "middle",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "\"그래,<delay=0.2f> <speed=0.7f>이름 하나는 제대로 외웠구나.</speed>\"<delay=0.8f>",
+      "direction": "right",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "<speed=0.8f>우물에서는 아무 소리도 들리지 않았습니다.</speed>",
+      "direction": "middle",
+      "checkInput": true
+    }
+  ],
+  "branches": {
+    "수한무/1": [
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "수한무 거북이와 두루미... 수한무 거북이와 두루미...<delay=0.4f>",
+        "direction": "left",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "좋아.<delay=0.2f> 외웠다.",
+        "direction": "left",
+        "checkInput": true
+      },
+      {
+        "type": "Emotion",
+        "delayBefore": 0.0,
+        "score": 20,
+        "clear": true
+      }
+    ],
+    "수한무/2": [
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "수한무... 거북이와... 뭐였더라.<delay=0.4f>",
+        "direction": "left",
+        "checkInput": true
+      },
+      {
+        "type": "Emotion",
+        "delayBefore": 0.0,
+        "score": 5,
+        "clear": true
+      }
+    ],
+    "수한무/3": [
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "설마 부를 일이 있겠어.<delay=0.4f>",
+        "direction": "left",
+        "checkInput": true
+      },
+      {
+        "type": "Emotion",
+        "delayBefore": 0.0,
+        "score": -15,
+        "clear": false
+      }
+    ]
+  }
+}

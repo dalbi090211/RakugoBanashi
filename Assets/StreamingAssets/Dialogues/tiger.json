@@ -1,0 +1,503 @@
+﻿{
+  "sceneName": "호랑이와 곶감",
+  "dialogues": [
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "깊은 산속에 배고픈 호랑이 한 마리가 살았습니다.<delay=0.5f>",
+      "direction": "middle",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "어느 겨울 밤,<delay=0.3f> 호랑이는 마을로 내려왔습니다.<delay=0.4f>",
+      "direction": "middle",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "\"오늘은 소 한 마리 잡아먹어야겠다.\"<delay=0.6f>",
+      "direction": "left",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "외양간 앞에 웅크리고 앉아,<delay=0.3f> 때를 기다리고 있었지요.<delay=0.5f>",
+      "direction": "middle",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "그때,<delay=0.4f> 안방에서 아이 우는 소리가 들렸습니다.<delay=0.5f>",
+      "direction": "middle",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "어머니가 달래기 시작했습니다.<delay=0.3f>",
+      "direction": "middle",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "\"울지 마라,<delay=0.3f> 울지 마.<delay=0.3f> 저기 <speed=0.7f>늑대</speed> 온다!\"<delay=0.6f>",
+      "direction": "right",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "아이는 계속 울었습니다.<delay=0.5f>",
+      "direction": "middle",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "호랑이가 귀를 쫑긋 세웠습니다.<delay=0.4f>",
+      "direction": "middle",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "\"저 아이,<delay=0.3f> 늑대도 안 무서운가?\"<delay=0.6f>",
+      "direction": "left",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "어머니가 다시 말했습니다.<delay=0.3f>",
+      "direction": "middle",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "\"울지 마,<delay=0.3f> 뚝!<delay=0.2f> <speed=0.7f>호랑이</speed> 온다!\"<delay=0.6f>",
+      "direction": "right",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "아이는 여전히 울었습니다.<delay=0.5f>",
+      "direction": "middle",
+      "checkInput": true
+    },
+    {
+      "type": "ChoiceDial",
+      "delayBefore": 0.0,
+      "direction": "left",
+      "choices": [
+        { "text": "(으쓱하며 뿌듯해한다)",       "branchId": "호랑이/1" },
+        { "text": "(어딘가 불안한 기분이 든다)", "branchId": "호랑이/2" },
+        { "text": "(그냥 소나 잡으러 간다)",     "branchId": "호랑이/3" }
+      ]
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "그때였습니다.<delay=0.8f>",
+      "direction": "middle",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "어머니가 목소리를 낮추며 말했습니다.<delay=0.4f>",
+      "direction": "middle",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "\"뚝.<delay=0.6f> <speed=0.6f>곶감</speed> 준다.\"<delay=1.0f>",
+      "direction": "right",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "<shake>아이가 울음을 뚝 그쳤습니다.</shake><delay=0.8f>",
+      "direction": "middle",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "호랑이는 등골이 오싹했습니다.<delay=0.6f>",
+      "direction": "middle",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "\"늑대도,<delay=0.3f> 나도 못 세웠는데...<delay=0.5f> <shake>곶감?!</shake>\"<delay=0.8f>",
+      "direction": "left",
+      "checkInput": true
+    },
+    {
+      "type": "ChoiceDial",
+      "delayBefore": 0.0,
+      "direction": "left",
+      "choices": [
+        { "text": "(곶감이 뭔지 알아내야겠다)",   "branchId": "호랑이/4" },
+        { "text": "(무조건 도망쳐야겠다)",         "branchId": "호랑이/5" },
+        { "text": "(혹시 나보다 크지 않을까)",     "branchId": "호랑이/6" }
+      ]
+    },
+    {
+      "type": "EndingChoice",
+      "delayBefore": 0.0,
+      "endings": [
+        { "title": "곶감의 정체를 밝힌다",     "branchId": "호랑이/ending1", "requiredFlow": 70 },
+        { "title": "줄행랑을 친다",             "branchId": "호랑이/ending2", "requiredFlow": 40 },
+        { "title": "소도둑과 엮인다",           "branchId": "호랑이/ending3", "requiredFlow": 20 },
+        { "title": "곶감을 직접 먹어본다",      "branchId": "호랑이/ending4", "requiredFlow": 0  }
+      ]
+    }
+  ],
+  "branches": {
+    "호랑이/1": [
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "\"흥,<delay=0.3f> 역시 나는 무서운 존재야.\"<delay=0.5f>",
+        "direction": "left",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "가슴을 쭉 폈습니다.<delay=0.4f>",
+        "direction": "middle",
+        "checkInput": true
+      },
+      {
+        "type": "Emotion",
+        "delayBefore": 0.0,
+        "score": 10,
+        "clear": true
+      }
+    ],
+    "호랑이/2": [
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "호랑이 소리에도 안 우는 아이라니...<delay=0.5f>",
+        "direction": "left",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "어딘가 이상한 느낌이 들었습니다.<delay=0.4f>",
+        "direction": "left",
+        "checkInput": true
+      },
+      {
+        "type": "Emotion",
+        "delayBefore": 0.0,
+        "score": 5,
+        "clear": true
+      }
+    ],
+    "호랑이/3": [
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "\"됐어.<delay=0.3f> 소나 잡으러 가자.\"<delay=0.5f>",
+        "direction": "left",
+        "checkInput": true
+      },
+      {
+        "type": "Emotion",
+        "delayBefore": 0.0,
+        "score": -10,
+        "clear": false
+      }
+    ],
+    "호랑이/4": [
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "\"곶감...<delay=0.4f> 대체 뭐길래 저 아이를 잠재우는 거지?\"<delay=0.6f>",
+        "direction": "left",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "호랑이는 창문 쪽으로 바짝 다가갔습니다.<delay=0.5f>",
+        "direction": "middle",
+        "checkInput": true
+      },
+      {
+        "type": "Emotion",
+        "delayBefore": 0.0,
+        "score": 20,
+        "clear": true
+      }
+    ],
+    "호랑이/5": [
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "\"모르는 게 나아.<delay=0.3f> 모르는 게 약이야.\"<delay=0.6f>",
+        "direction": "left",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "다리가 절로 후들거렸습니다.<delay=0.4f>",
+        "direction": "left",
+        "checkInput": true
+      },
+      {
+        "type": "Emotion",
+        "delayBefore": 0.0,
+        "score": 5,
+        "clear": true
+      }
+    ],
+    "호랑이/6": [
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "\"설마...<delay=0.5f> 나보다 더 큰 놈인가?\"<delay=0.8f>",
+        "direction": "left",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "<shake>호랑이는 그 자리에서 굳어버렸습니다.</shake><delay=0.5f>",
+        "direction": "middle",
+        "checkInput": true
+      },
+      {
+        "type": "Emotion",
+        "delayBefore": 0.0,
+        "score": -15,
+        "clear": false
+      }
+    ],
+
+    "호랑이/ending1": [
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "그때,<delay=0.3f> 마침 소도둑이 외양간으로 숨어들었습니다.<delay=0.5f>",
+        "direction": "middle",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "어둠 속에서 뭔가 커다랗고 따뜻한 게 잡혔습니다.<delay=0.5f>",
+        "direction": "middle",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "\"오,<delay=0.3f> 소 잡았다!\"<delay=0.5f>",
+        "direction": "right",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "호랑이도 생각했습니다.<delay=0.3f>",
+        "direction": "middle",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "\"어,<delay=0.3f> 곶감 잡혔다!\"<delay=0.8f>",
+        "direction": "left",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "날이 밝자,<delay=0.4f> 소도둑은 호랑이 등 위에 앉아 있었고,<delay=0.4f> 호랑이는 소도둑을 곶감이라 굳게 믿으며 밤새 도망쳤습니다.<delay=0.8f>",
+        "direction": "middle",
+        "checkInput": true
+      }
+    ],
+
+    "호랑이/ending2": [
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "호랑이는 냅다 뒷산으로 달렸습니다.<delay=0.5f>",
+        "direction": "middle",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "숨을 헐떡이며 산꼭대기에 다다라서야 멈췄습니다.<delay=0.5f>",
+        "direction": "middle",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "\"살았다...<delay=0.5f> 곶감한테 안 잡혔어...\"<delay=0.6f>",
+        "direction": "left",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "호랑이 친구가 물었습니다.<delay=0.3f>",
+        "direction": "middle",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "\"곶감이 뭔데?\"<delay=0.5f>",
+        "direction": "right",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "\"몰라.<delay=0.5f> <shake>그러니까 무섭지.</shake>\"<delay=1.0f>",
+        "direction": "left",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "<speed=0.6f>그 뒤로 호랑이는 마을 근처에는 얼씬도 하지 않았습니다.</speed>",
+        "direction": "middle",
+        "checkInput": true
+      }
+    ],
+
+    "호랑이/ending3": [
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "마침 외양간에 소도둑이 숨어들었습니다.<delay=0.5f>",
+        "direction": "middle",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "소도둑도 집 안에서 곶감 소리를 들었습니다.<delay=0.4f>",
+        "direction": "middle",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "소도둑은 생각했습니다.<delay=0.3f>",
+        "direction": "middle",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "\"호랑이도 못 잠재운 아이를 재웠다고?<delay=0.4f> 곶감이 여기 있나?\"<delay=0.6f>",
+        "direction": "right",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "소도둑은 어둠 속에서 뭔가를 잡았습니다.<delay=0.5f>",
+        "direction": "middle",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "호랑이도 생각했습니다.<delay=0.3f>",
+        "direction": "middle",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "\"곶감이 나도 잡으러 왔나!\"<delay=0.8f>",
+        "direction": "left",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "<speed=0.6f>둘은 한동안 서로를 붙잡고 놓지 않았습니다.<delay=0.5f> 각자 상대가 곶감인 줄 알면서요.</speed>",
+        "direction": "middle",
+        "checkInput": true
+      }
+    ],
+
+    "호랑이/ending4": [
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "이튿날 아침,<delay=0.3f> 호랑이는 용기를 내어 처마 밑을 뒤졌습니다.<delay=0.5f>",
+        "direction": "middle",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "주렁주렁 매달린 붉고 쪼그란 것들이 보였습니다.<delay=0.5f>",
+        "direction": "middle",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "\"이게... 곶감?\"<delay=0.8f>",
+        "direction": "left",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "호랑이는 하나를 덥석 베어 물었습니다.<delay=0.5f>",
+        "direction": "middle",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "달았습니다.<delay=0.6f> 아주 달았습니다.<delay=0.6f>",
+        "direction": "middle",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "\"...이걸 무서워했다고?\"<delay=0.8f>",
+        "direction": "left",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "<speed=0.6f>호랑이는 그날 곶감을 스물 세 개 먹었습니다.<delay=0.5f> 소는 잊은 지 오래였습니다.</speed>",
+        "direction": "middle",
+        "checkInput": true
+      }
+    ]
+  }
+}

@@ -35,6 +35,7 @@ public class EnvManager : Singleton<EnvManager>
     private static readonly Vector3 rightChangeOffset = new Vector3(0.2f, 0f, 0f);
 
     private ColorAdjustments colorAdjustments;
+    private DepthOfField depthOfField;
     private Color curColor = new Color32(87, 87, 87, 255);
 
     // 현재 활성 vcam 추적
@@ -49,6 +50,7 @@ public class EnvManager : Singleton<EnvManager>
         curVcam = envVcam;
         envVcam.Priority = PRIOIRTY_NUM;
         postProcessVolume.profile.TryGet(out colorAdjustments);
+        postProcessVolume.profile.TryGet(out depthOfField);
         SetDarkEnv(0f).Forget();
         SetOffSpotLight(0f).Forget();
     }
@@ -65,6 +67,12 @@ public class EnvManager : Singleton<EnvManager>
     public async UniTask SetDarkSpotLight(float time) => await SetSpotLightColor(darkEnvColor, time);
     public async UniTask SetBrightSpotLight(float time) => await SetSpotLightColor(brightEnvColor, time);
     public async UniTask SetOffSpotLight(float time) => await SetSpotLightColor(offEnvColor, time);
+
+    public void SetDOF(bool active)
+    {
+        if (depthOfField != null)
+            depthOfField.active = active;
+    }
 
     public async UniTask SetLeftVCam(float time)
     {

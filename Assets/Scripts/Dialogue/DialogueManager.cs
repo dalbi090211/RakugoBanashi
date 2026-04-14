@@ -23,10 +23,12 @@ public class DialogueManager : Singleton<DialogueManager>
     [SerializeField] private GameObject talkUI;
     [SerializeField] private ButtonMapper titleManager;
     [SerializeField] private ChoiceEventManager choiceManager;
+    [SerializeField] private EndingChoiceManager endingChoiceManager;
     [SerializeField] private MakuraStarter makuraStarter;
     [SerializeField] private TextBox leftTextBox;
     [SerializeField] private TextBox rightTextBox;
     [SerializeField] private TextBox middleTextBox;
+    [SerializeField] private GameObject textTarget;
 
     // ── 설정 ─────────────────────────────────────────────────────
     [Header("딜레이")]
@@ -35,6 +37,7 @@ public class DialogueManager : Singleton<DialogueManager>
     // ── 런타임 상태 ───────────────────────────────────────────────
     private DialogueData curTalkData;
     private DialogueData appendData;
+    private RuntimeDialogueData curRuntimeData;
     private bool eventLock;
     private CamDir curDir = CamDir.middle;
     private EventCommandInvoker eventCommandInvoker = new EventCommandInvoker();
@@ -50,8 +53,8 @@ public class DialogueManager : Singleton<DialogueManager>
     private int curFlow = 0;
     private int flowBench = 50;
     [SerializeField] private Slider flowSlider;
-    private float gaugeShowDelay = 1.2f;
-    private float gaugeFillDelay = 0.1f;
+    [SerializeField] private float gaugeShowDelay = 1.2f;
+    float fillDuration = 2.0f;
 
     // ─────────────────────────────────────────────────────────────
     #region Unity Lifecycle
@@ -111,14 +114,17 @@ public class DialogueManager : Singleton<DialogueManager>
     {
         flowSlider.gameObject.SetActive(true);
         flowSlider.maxValue = flowMax;
-        flowSlider.value = curFlow; // 현재값부터 시작
+        flowSlider.value = curFlow;
 
         int targetFlow = Mathf.Clamp(curFlow + flow, 0, flowMax);
+        float elapsed = 0f;
+        float startValue = curFlow;
 
-        while (flowSlider.value < targetFlow)
+        while (elapsed < fillDuration)
         {
-            flowSlider.value += 1;
-            await UniTask.Delay(TimeSpan.FromSeconds(gaugeFillDelay));
+            elapsed += Time.deltaTime;
+            flowSlider.value = Mathf.Lerp(startValue, targetFlow, elapsed / fillDuration);
+            await UniTask.Yield();
         }
 
         flowSlider.value = targetFlow;
@@ -143,6 +149,7 @@ public class DialogueManager : Singleton<DialogueManager>
         makuraStarter.setInputField(false);
         startEmotion(clear).Forget();
         await startFlowResult(score);
+        await UniTask.Delay(TimeSpan.FromSeconds(1.5f));
     }
 
     private async UniTask startEmotion(bool clear)
@@ -175,32 +182,57 @@ public class DialogueManager : Singleton<DialogueManager>
         }
     }
 
-    public async UniTask StartEvent(DialogueData data)
+    // ✅ RuntimeDialogueData 오버로드 추가
+    public async UniTask StartEvent(RuntimeDialogueData data)
     {
-        if (data == null) { Debug.LogError("DialogueData가 null입니다."); return; }
+        if (data == null) { Debug.LogError("RuntimeDialogueData가 null입니다."); return; }
+
+        curRuntimeData = data;
         curFlow = 30;
         flowSlider.value = curFlow / flowMax;
         titleManager.TitleOff();
         await EnvManager.Instance.SetBrightEnv(2.0f);
         await UniTask.Delay(TimeSpan.FromSeconds(1.5f));
         await EnvManager.Instance.SetBrightSpotLight(0f);
-        curTalkData = data;
 
-        //ai평가
         await UniTask.Delay(TimeSpan.FromSeconds(1f));
         await makuraStarter.fillInputField(data.sceneName);
         await UniTask.Delay(TimeSpan.FromSeconds(2f));
         makuraStarter.setInputField(true);
         MakuraResult result = await makuraStarter.InputAwait(data.sceneName);
-        if (result == null)
-        {
-            Debug.LogError("AI 평가 실패");
-            // 기본값으로 진행하거나 재시도
-            return;
-        }
+        if (result == null) { Debug.LogError("AI 평가 실패"); return; }
+
         await UniTask.Delay(TimeSpan.FromSeconds(0.6f));
         await emotionTask(result.score, result.score > 0);
-        await TimeLineEvent();
+        await TimeLineEvent(data.dialogues);  // ✅ 리스트 직접 전달
+        await EnvManager.Instance.SetDarkEnv(2.0f);
+        await EnvManager.Instance.SetOffSpotLight(0f);
+        titleManager.TitleOn();
+    }
+
+    // ✅ 기존 StartEvent도 TimeLineEvent 시그니처 맞게 수정
+    public async UniTask StartEvent(DialogueData data)
+    {
+        if (data == null) { Debug.LogError("DialogueData가 null입니다."); return; }
+
+        curTalkData = data;
+        curFlow = 30;
+        flowSlider.value = curFlow / flowMax;
+        titleManager.TitleOff();
+        await EnvManager.Instance.SetBrightEnv(2.0f);
+        await UniTask.Delay(TimeSpan.FromSeconds(1.5f));
+        await EnvManager.Instance.SetBrightSpotLight(0f);
+
+        await UniTask.Delay(TimeSpan.FromSeconds(1f));
+        await makuraStarter.fillInputField(data.sceneName);
+        await UniTask.Delay(TimeSpan.FromSeconds(2f));
+        makuraStarter.setInputField(true);
+        MakuraResult result = await makuraStarter.InputAwait(data.sceneName);
+        if (result == null) { Debug.LogError("AI 평가 실패"); return; }
+
+        await UniTask.Delay(TimeSpan.FromSeconds(0.6f));
+        await emotionTask(result.score, result.score > 0);
+        await TimeLineEvent(data.dialogues);  // ✅ 리스트 직접 전달
         await EnvManager.Instance.SetDarkEnv(2.0f);
         await EnvManager.Instance.SetOffSpotLight(0f);
         titleManager.TitleOn();
@@ -240,10 +272,10 @@ public class DialogueManager : Singleton<DialogueManager>
     // ─────────────────────────────────────────────────────────────
     #region Timeline
 
-    private async UniTask TimeLineEvent()
+    // ✅ TimeLineEvent: List<GameEvent> 파라미터로 변경
+    private async UniTask TimeLineEvent(List<GameEvent> initialEvents)
     {
-        // ── List → 인덱스 순회 대신 앞에 삽입 가능하도록 변경
-        var queue = new List<GameEvent>(curTalkData.dialogues);
+        var queue = new List<GameEvent>(initialEvents);
 
         for (int i = 0; i < queue.Count; i++)
         {
@@ -258,8 +290,6 @@ public class DialogueManager : Singleton<DialogueManager>
                     curDir = dialogue.direction;
 
                     TextBoxData data = BuildTextBoxData(dialogue.Text);
-
-                    // ── 말하기 시작 ──────────────────────────────
                     setAnim(dirToTalkState(dialogue.direction));
 
                     if (dialogue.direction == CamDir.left)
@@ -284,16 +314,14 @@ public class DialogueManager : Singleton<DialogueManager>
                         await middleTextBox.Init(data);
                     }
 
-                    // ── 타이핑 끝난 후 idle ──────────────────────
                     setAnim(1);
-
                     await UniTask.Delay(TimeSpan.FromSeconds(textShowDelay));
                     SkipText();
                     break;
 
                 case eventType.Anim:
                     var anim = ev as Animation;
-                    anim.AnimTarget.GetComponent<Animator>().Play(anim.animationName);
+                    textTarget.GetComponent<Animator>().Play(anim.animationName);
                     break;
 
                 case eventType.Event:
@@ -307,7 +335,7 @@ public class DialogueManager : Singleton<DialogueManager>
                     rightTextBox.Hide();
                     leftTextBox.Hide();
                     middleTextBox.Hide();
-
+                    EnvManager.Instance.SetDOF(true);
                     if (choiceDial.direction == CamDir.left)
                         await EnvManager.Instance.SetLeftVCam(1f);
                     else if (choiceDial.direction == CamDir.right)
@@ -315,21 +343,60 @@ public class DialogueManager : Singleton<DialogueManager>
                     else
                         await EnvManager.Instance.SetMiddleVCam(1f);
 
-                    // ── 변경: TimerTask() 제거하고 ShowChoice 하나로 통합
-                    await choiceManager.ShowChoice(choiceDial);
+                    choiceRes selected = await choiceManager.ShowChoice(choiceDial);
+
+                    // ✅ RuntimeDialogueData branches 우선, 없으면 구 appendData 방식 폴백
+                    if (!string.IsNullOrEmpty(selected.appendDialPath))
+                    {
+                        if (curRuntimeData?.branches.TryGetValue(
+                                selected.appendDialPath, out var branch) == true)
+                        {
+                            queue.InsertRange(i + 1, branch);
+                        }
+                        else
+                        {
+                            // 기존 ScriptableObject 방식 폴백 (마이그레이션 완료 전까지)
+                            Debug.LogWarning(
+                                $"branch 없음: {selected.appendDialPath}");
+                        }
+                    }
+                    EnvManager.Instance.SetDOF(false);
                     break;
 
                 case eventType.Emotion:
                     var emotionDial = ev as Emotion;
                     await emotionTask(emotionDial.score, emotionDial.clear);
-                    await UniTask.Delay(TimeSpan.FromSeconds(1.5f));
+                    break;
+
+                case eventType.AppendDial:
+                    var appendDial = ev as AppendDial;
+                    if (appendDial.events?.Count > 0)
+                        queue.InsertRange(i + 1, appendDial.events);
+                    break;
+
+                case eventType.EndingChoice:
+                    var endingChoice = ev as EndingChoice;
+                    rightTextBox.Hide();
+                    leftTextBox.Hide();
+                    middleTextBox.Hide();
+                    EnvManager.Instance.SetEnvVCam(1f).Forget();
+
+                    endingRes selectedEnding = await endingChoiceManager.ShowEnding(
+                        endingChoice, curFlow);  // curFlow 넘겨서 조건 체크
+
+                    if (!string.IsNullOrEmpty(selectedEnding.branchId)
+                        && curRuntimeData?.branches.TryGetValue(
+                            selectedEnding.branchId, out var endingBranch) == true)
+                    {
+                        queue.InsertRange(i + 1, endingBranch);
+                    }
                     break;
             }
 
             if (eventLock)
                 await UniTask.WaitUntil(() => !eventLock);
 
-            // ── 변경: appendData가 생기면 현재 위치 바로 다음에 삽입
+            // 구 appendData 방식 폴백 (마이그레이션 완료 후 제거)
             if (appendData != null)
             {
                 queue.InsertRange(i + 1, appendData.dialogues);
@@ -406,12 +473,13 @@ public class DialogueManager : Singleton<DialogueManager>
 
     // ─────────────────────────────────────────────────────────────
     #region Cleanup
-
     private void CleanUp()
     {
         curTalkData = null;
+        curRuntimeData = null; // ✅ 추가
+        appendData = null;
         eventLock = false;
-        setAnim(1); // 이벤트 종료 후 idle 보장
+        setAnim(1);
     }
     #endregion
 

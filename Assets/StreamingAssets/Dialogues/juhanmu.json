@@ -1,0 +1,454 @@
+﻿{
+  "sceneName": "수한무",
+  "dialogues": [
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "어느 날,<delay=0.2f> 서 대감 댁에 경사가 났습니다.<delay=0.4f>",
+      "direction": "middle",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "5대 독자가 태어난 것이지요.<delay=0.5f>",
+      "direction": "middle",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "서 대감은 당장 유명한 점쟁이를 찾아갔습니다.<delay=0.4f>",
+      "direction": "middle",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "\"선생,<delay=0.3f> 우리 아이가 <speed=0.6f>천년만년</speed> 살 수 있는 이름을 지어주시오.\"<delay=0.5f>",
+      "direction": "left",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "점쟁이가 말했습니다.<delay=0.3f>",
+      "direction": "middle",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "\"좋습니다.<delay=0.4f> <speed=0.7f>장수를 뜻하는 이름을 모조리 붙여드리지요.</speed><delay=0.3f> 단,<delay=0.2f> <shake>한 글자라도 빠뜨리면...</shake><delay=0.6f> 그 수명도 함께 빠집니다.\"<delay=0.6f>",
+      "direction": "right",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "그리하여 태어난 이름이...<delay=0.8f>",
+      "direction": "middle",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "<speed=1.5f>수한무 <cramble>거북이와 두루미 삼천갑자 <cramble>동방삭 치치카포 사리사리센타 <cramble>워리워리 세브리깡 무두셀라 구름이 <cramble>허리케인 담벼락 서생원 <cramble>고양이 바둑이 돌돌이.</speed><delay=1.0f>",
+      "direction": "middle",
+      "checkInput": true
+    },
+    {
+      "type": "ChoiceDial",
+      "delayBefore": 0.0,
+      "direction": "left",
+      "choices": [
+        { "text": "(몇 번이고 속으로 되뇐다)",  "branchId": "수한무/1" },
+        { "text": "(한 번 중얼거려본다)",        "branchId": "수한무/2" },
+        { "text": "(너무 길어서 포기한다)",      "branchId": "수한무/3" }
+      ]
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "아이는 동네 친구들과 뛰어놀았습니다.<delay=0.4f>",
+      "direction": "middle",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "그러다 그만,<delay=0.3f> <shake>우물에 빠지고 말았지요.</shake><delay=0.6f>",
+      "direction": "middle",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "친구가 허겁지겁 하인을 찾아가 외쳤습니다.<delay=0.3f>",
+      "direction": "middle",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "\"아저씨!<delay=0.3f> 빨리요!<delay=0.3f> 도련님이 우물에 빠졌어요!\"<delay=0.5f>",
+      "direction": "left",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "하인이 눈을 부릅떴습니다.<delay=0.3f>",
+      "direction": "middle",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "\"도련님 함자를 함부로 줄여 부르면 못쓰지!<delay=0.4f> <shake>풀네임으로 다시!</shake>\"<delay=0.6f>",
+      "direction": "right",
+      "checkInput": true
+    },
+    {
+      "type": "ChoiceDial",
+      "delayBefore": 0.0,
+      "direction": "left",
+      "choices": [
+        { "text": "(숨을 크게 들이켜고 외친다)",  "branchId": "수한무/4" },
+        { "text": "(더듬더듬 읊어본다)",           "branchId": "수한무/5" },
+        { "text": "(기억이 가물가물하다)",          "branchId": "수한무/6" }
+      ]
+    },
+    {
+      "type": "EndingChoice",
+      "delayBefore": 0.0,
+      "endings": [
+        { "title": "이름을 끝까지 외운다",   "branchId": "수한무/ending1", "requiredFlow": 70 },
+        { "title": "이름을 되묻는다",         "branchId": "수한무/ending2", "requiredFlow": 40 },
+        { "title": "이름 하나를 빠뜨린다",    "branchId": "수한무/ending3", "requiredFlow": 20 },
+        { "title": "포기하고 눈을 감는다",    "branchId": "수한무/ending4", "requiredFlow": 0  }
+      ]
+    }
+  ],
+  "branches": {
+    "수한무/1": [
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "수한무 거북이와 두루미... 수한무 거북이와 두루미...<delay=0.4f>",
+        "direction": "left",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "좋아.<delay=0.2f> 외웠다.",
+        "direction": "left",
+        "checkInput": true
+      },
+      {
+        "type": "Emotion",
+        "delayBefore": 0.0,
+        "score": 20,
+        "clear": true
+      }
+    ],
+    "수한무/2": [
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "수한무... 거북이와... 뭐였더라.<delay=0.4f>",
+        "direction": "left",
+        "checkInput": true
+      },
+      {
+        "type": "Emotion",
+        "delayBefore": 0.0,
+        "score": 5,
+        "clear": true
+      }
+    ],
+    "수한무/3": [
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "설마 부를 일이 있겠어.<delay=0.4f>",
+        "direction": "left",
+        "checkInput": true
+      },
+      {
+        "type": "Emotion",
+        "delayBefore": 0.0,
+        "score": -15,
+        "clear": false
+      }
+    ],
+    "수한무/4": [
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "\"<speed=1.5f>수한무 거북이와 두루미 삼천갑자 동방삭 치치카포 사리사리센타 워리워리 세브리깡 무두셀라 구름이 허리케인 담벼락 서생원 고양이 바둑이 돌돌이</speed>가 우물에 빠졌어요!!\"<delay=0.6f>",
+        "direction": "left",
+        "checkInput": true
+      },
+      {
+        "type": "Emotion",
+        "delayBefore": 0.0,
+        "score": 25,
+        "clear": true
+      }
+    ],
+    "수한무/5": [
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "\"수한무... <speed=0.7f>거북이와 두루미... 삼천갑자...</speed> 동방삭이... 우물에...\"<delay=0.5f>",
+        "direction": "left",
+        "checkInput": true
+      },
+      {
+        "type": "Emotion",
+        "delayBefore": 0.0,
+        "score": 5,
+        "clear": true
+      }
+    ],
+    "수한무/6": [
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "\"수한무... 거북이... <shake>그 다음이 뭐였더라...</shake>\"<delay=0.6f>",
+        "direction": "left",
+        "checkInput": true
+      },
+      {
+        "type": "Emotion",
+        "delayBefore": 0.0,
+        "score": -10,
+        "clear": false
+      }
+    ],
+
+    "수한무/ending1": [
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "하인이 우물로 달려갔습니다.<delay=0.5f>",
+        "direction": "middle",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "그런데.<delay=1.0f>",
+        "direction": "middle",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "우물가에는 이미 아이가 앉아 있었습니다.<delay=0.6f>",
+        "direction": "middle",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "하인이 숨을 몰아쉬며 물었습니다.<delay=0.3f>",
+        "direction": "middle",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "\"도, 도련님?<delay=0.4f> 어떻게 나오셨습니까?\"<delay=0.5f>",
+        "direction": "right",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "아이가 태연하게 대답했습니다.<delay=0.3f>",
+        "direction": "middle",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "\"이름 부르는 거 듣다가,<delay=0.4f> 심심해서 그냥 나왔어.\"<delay=0.8f>",
+        "direction": "right",
+        "checkInput": true
+      }
+    ],
+
+    "수한무/ending2": [
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "하인이 우물로 달려갔습니다.<delay=0.5f>",
+        "direction": "middle",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "아이를 건져 올리고,<delay=0.3f> 등을 두드리고,<delay=0.3f> 숨을 확인했습니다.<delay=0.6f>",
+        "direction": "middle",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "\"살았다!<delay=0.4f> 살았어!\"<delay=0.5f>",
+        "direction": "right",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "서 대감이 달려와 물었습니다.<delay=0.3f>",
+        "direction": "middle",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "\"얼마나 걸렸느냐?\"<delay=0.5f>",
+        "direction": "left",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "하인이 머리를 긁적였습니다.<delay=0.4f>",
+        "direction": "middle",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "\"이름 다 듣고 나서 뛰어갔으니...<delay=0.5f> <shake>한 식경쯤 됐습니다.</shake>\"<delay=0.8f>",
+        "direction": "right",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "<speed=0.6f>아이는 살았습니다.<delay=0.6f> 다만 그 뒤로,<delay=0.4f> 아무도 이름을 끝까지 부르지 않았습니다.</speed>",
+        "direction": "middle",
+        "checkInput": true
+      }
+    ],
+
+    "수한무/ending3": [
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "하인이 우물로 달려갔습니다.<delay=0.5f>",
+        "direction": "middle",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "아이를 건져 올렸습니다.<delay=0.4f> 그런데 이상했습니다.<delay=0.6f>",
+        "direction": "middle",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "아이가 눈을 떴습니다.<delay=0.5f> 그러나 무언가,<delay=0.3f> 한 뼘쯤 부족해 보였습니다.<delay=0.6f>",
+        "direction": "middle",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "점쟁이가 혀를 찼습니다.<delay=0.4f>",
+        "direction": "middle",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "\"분명 한 글자 빠뜨렸겠지.<delay=0.5f> 어디 보자...<delay=0.8f> <shake>돌돌이가 없구나.</shake>\"<delay=0.8f>",
+        "direction": "right",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "\"돌돌이는... 얼마짜리였습니까?\"<delay=0.5f>",
+        "direction": "left",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "\"글쎄요.<delay=0.5f> 한 삼 년?\"<delay=0.8f>",
+        "direction": "right",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "<speed=0.6f>아이는 천년을 살았습니다.<delay=0.5f> 다만 마지막 삼 년은 늘 어딘가 허전했다고 합니다.</speed>",
+        "direction": "middle",
+        "checkInput": true
+      }
+    ],
+
+    "수한무/ending4": [
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "친구는 입을 다물었습니다.<delay=0.6f>",
+        "direction": "middle",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "하인이 재촉했습니다.<delay=0.3f>",
+        "direction": "middle",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "\"왜 멈추느냐!<delay=0.4f> 빨리!\"<delay=0.5f>",
+        "direction": "right",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "\"몰라요.<delay=0.5f> <shake>외운 데까지밖에 모르겠어요.</shake>\"<delay=0.8f>",
+        "direction": "left",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "하인은 잠시 생각했습니다.<delay=0.5f> 그리고 자리에 주저앉았습니다.<delay=0.6f>",
+        "direction": "middle",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "\"나도 사실... 끝까지는 모른다.\"<delay=1.0f>",
+        "direction": "right",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "<speed=0.6f>우물은 그날 아무도 들여다보지 못했습니다.</speed>",
+        "direction": "middle",
+        "checkInput": true
+      }
+    ]
+  }
+}
