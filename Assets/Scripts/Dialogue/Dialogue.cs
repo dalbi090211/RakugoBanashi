@@ -11,14 +11,6 @@ public enum CamDir
     right
 }
 
-public enum BGMArea
-{
-    Unset = -1,
-    GrayTown = 0,
-    Casino = 1,
-    Boss_Greed = 2
-}
-
 public enum eventType
 {
     Dial,

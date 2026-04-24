@@ -55,7 +55,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _EnableExternalAlpha: 0
-    - _PixelSize: 400
+    - _PixelSize: 512
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ZWrite: 0

@@ -1173,7 +1173,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineCamera
   Priority:
     Enabled: 1
-    m_Value: 1
+    m_Value: 0
   OutputChannel: 1
   StandbyUpdate: 2
   m_StreamingVersion: 20241001
@@ -1210,13 +1210,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 142723516}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0.011257162, z: 0, w: 0.99993664}
-  m_LocalPosition: {x: 1.67, y: -0.35, z: 0.25000048}
+  m_LocalRotation: {x: 0, y: 0.04510146, z: 0, w: 0.9989824}
+  m_LocalPosition: {x: 1.27, y: -0.45999998, z: 0.25000048}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 1.29, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 5.17, z: 0}
 --- !u!114 &142723519
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1235,7 +1235,7 @@ MonoBehaviour:
     AngularDampingMode: 0
     RotationDamping: {x: 1, y: 1, z: 1}
     QuaternionDamping: 1
-  FollowOffset: {x: 1.67, y: 0.13, z: -4.14}
+  FollowOffset: {x: 1.27, y: 0.02, z: -4.14}
 --- !u!114 &142723520
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3647,7 +3647,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineCamera
   Priority:
     Enabled: 1
-    m_Value: 4
+    m_Value: 32
   OutputChannel: 1
   StandbyUpdate: 2
   m_StreamingVersion: 20241001
@@ -4872,7 +4872,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -5026,7 +5026,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineCamera
   Priority:
     Enabled: 1
-    m_Value: 13
+    m_Value: 39
   OutputChannel: 1
   StandbyUpdate: 2
   m_StreamingVersion: 20241001
@@ -5120,16 +5120,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 564460943}
-  m_LocalRotation: {x: 0, y: -0.06392275, z: 0, w: 0.99795485}
-  m_LocalPosition: {x: 0, y: 0, z: 0.34}
+  m_LocalRotation: {x: 0, y: 0.13744457, z: 0, w: 0.9905095}
+  m_LocalPosition: {x: 0, y: 0, z: -0.67}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2109429909}
-  m_LocalEulerAnglesHint: {x: 0, y: -7.33, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 15.8, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 4.43, y: 1.24}
+  m_AnchoredPosition: {x: 3.91, y: 1.03}
   m_SizeDelta: {x: 6.242, y: 3.4526}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &564460945
@@ -8762,7 +8762,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineCamera
   Priority:
     Enabled: 1
-    m_Value: 6
+    m_Value: 0
   OutputChannel: 1
   StandbyUpdate: 2
   m_StreamingVersion: 20241001
@@ -8800,7 +8800,7 @@ Transform:
   m_GameObject: {fileID: 951455380}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.02303632, z: 0, w: 0.99973464}
-  m_LocalPosition: {x: -1.43, y: -0.35, z: -0.13999987}
+  m_LocalPosition: {x: -1.43, y: -0.35, z: -0.14}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -12105,7 +12105,7 @@ MonoBehaviour:
   dialogueNames:
   - juhanmu
   - tiger
-  - sigataganai
+  - mandu
 --- !u!114 &1409171591
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14352,16 +14352,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1743691919}
-  m_LocalRotation: {x: -0, y: 0.047312815, z: -0, w: 0.99888015}
+  m_LocalRotation: {x: 0, y: -0.19217944, z: 0, w: 0.98135984}
   m_LocalPosition: {x: 0, y: 0, z: 0.16}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2109429909}
-  m_LocalEulerAnglesHint: {x: 0, y: 5.424, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -22.16, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -3.14, y: 0.05}
+  m_AnchoredPosition: {x: -2.4, y: 0.2}
   m_SizeDelta: {x: 4.144, y: 3.4526}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1743691921

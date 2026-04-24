@@ -1,0 +1,566 @@
+﻿{
+  "sceneName": "만쥬 무서워",
+  "dialogues": [
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "사람마다 무서운 게 다르다고 하지요.<delay=0.5f>",
+      "direction": "middle",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "귀신이 무서운 사람,<delay=0.3f> 벌레가 무서운 사람,<delay=0.3f> 높은 곳이 무서운 사람.<delay=0.5f>",
+      "direction": "middle",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "어느 날,<delay=0.3f> 동네 친구들이 모여 앉아 수다를 떨다가,<delay=0.4f> 그런 얘기가 나왔습니다.<delay=0.5f>",
+      "direction": "middle",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "\"야,<delay=0.3f> 너는 뭐가 제일 무서워?\"<delay=0.5f>",
+      "direction": "right",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "한 명이 말했습니다.<delay=0.3f>",
+      "direction": "middle",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "\"나는 뱀.<delay=0.5f> 꿈에 나오면 식은땀이 나더라고.\"<delay=0.6f>",
+      "direction": "right",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "\"나는 귀신.<delay=0.4f> 사당 앞은 해가 져도 못 지나가.\"<delay=0.6f>",
+      "direction": "left",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "그때 구석에 앉아있던 요타로가 조용히 말했습니다.<delay=0.5f>",
+      "direction": "middle",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "\"나는...<delay=0.8f> <shake>만쥬.</shake>\"<delay=1.0f>",
+      "direction": "left",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "모두가 멈췄습니다.<delay=0.6f>",
+      "direction": "middle",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "\"만쥬?<delay=0.5f> 그 달콤한 만쥬 말이야?\"<delay=0.5f>",
+      "direction": "right",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "요타로가 고개를 끄덕였습니다.<delay=0.4f>",
+      "direction": "middle",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "\"어릴 때부터 그랬어.<delay=0.4f> 만쥬만 보면 <shake>온몸이 굳어버린다고.</shake>\"<delay=0.8f>",
+      "direction": "left",
+      "checkInput": true
+    },
+    {
+      "type": "ChoiceDial",
+      "delayBefore": 0.0,
+      "direction": "right",
+      "choices": [
+        { "text": "(믿는다. 분명 이유가 있겠지)",   "branchId": "만쥬/1" },
+        { "text": "(수상하다. 뭔가 꿍꿍이가 있어)", "branchId": "만쥬/2" },
+        { "text": "(장난치기 딱 좋겠다)",           "branchId": "만쥬/3" }
+      ]
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "친구들은 요타로가 낮잠을 자는 사이,<delay=0.4f> 장터에서 만쥬를 잔뜩 사 왔습니다.<delay=0.5f>",
+      "direction": "middle",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "팥 만쥬,<delay=0.2f> 깨 만쥬,<delay=0.2f> 밤 만쥬,<delay=0.2f> 콩 만쥬.<delay=0.5f>",
+      "direction": "middle",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "요타로 주변을 온통 만쥬로 둘러쌌습니다.<delay=0.5f>",
+      "direction": "middle",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "\"자,<delay=0.3f> 이제 깨워볼까.\"<delay=0.5f>",
+      "direction": "right",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "\"야,<delay=0.3f> 요타로.<delay=0.3f> 일어나봐.\"<delay=0.5f>",
+      "direction": "right",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "요타로가 눈을 뜨더니,<delay=0.4f> 만쥬를 발견했습니다.<delay=0.5f>",
+      "direction": "middle",
+      "checkInput": true
+    },
+    {
+      "type": "Dial",
+      "delayBefore": 0.0,
+      "text": "\"아...<delay=0.8f>\"<delay=0.5f>",
+      "direction": "left",
+      "checkInput": true
+    },
+    {
+      "type": "ChoiceDial",
+      "delayBefore": 0.0,
+      "direction": "left",
+      "choices": [
+        { "text": "(비명을 지르며 뒷걸음질 친다)",   "branchId": "만쥬/4" },
+        { "text": "(눈을 빛내며 하나를 집어든다)",    "branchId": "만쥬/5" },
+        { "text": "(멍하니 만쥬를 바라본다)",         "branchId": "만쥬/6" }
+      ]
+    },
+    {
+      "type": "EndingChoice",
+      "delayBefore": 0.0,
+      "endings": [
+        { "title": "진짜 무서운 게 따로 있다",   "branchId": "만쥬/ending1", "requiredFlow": 70 },
+        { "title": "친구들도 따라 해본다",        "branchId": "만쥬/ending2", "requiredFlow": 40 },
+        { "title": "요타로의 진심이 들킨다",      "branchId": "만쥬/ending3", "requiredFlow": 20 },
+        { "title": "만쥬가 정말 무서웠다",        "branchId": "만쥬/ending4", "requiredFlow": 0  }
+      ]
+    }
+  ],
+  "branches": {
+    "만쥬/1": [
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "\"그렇구나...<delay=0.4f> 사람마다 다르니까.\"<delay=0.5f>",
+        "direction": "right",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "한 친구가 진지하게 고개를 끄덕였습니다.<delay=0.4f>",
+        "direction": "middle",
+        "checkInput": true
+      },
+      {
+        "type": "Emotion",
+        "delayBefore": 0.0,
+        "score": 10,
+        "clear": true
+      }
+    ],
+    "만쥬/2": [
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "한 친구가 눈을 가늘게 떴습니다.<delay=0.4f>",
+        "direction": "middle",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "\"요타로가 만쥬 싫어한다는 말은 들어본 적이 없는데...\"<delay=0.6f>",
+        "direction": "right",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "요타로는 태연하게 고개를 돌렸습니다.<delay=0.4f>",
+        "direction": "left",
+        "checkInput": true
+      },
+      {
+        "type": "Emotion",
+        "delayBefore": 0.0,
+        "score": 20,
+        "clear": true
+      }
+    ],
+    "만쥬/3": [
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "친구들이 서로 눈빛을 교환했습니다.<delay=0.4f>",
+        "direction": "middle",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "\"만쥬로 겁줄 수 있으면...<delay=0.3f> 싸게 먹히겠는데.\"<delay=0.6f>",
+        "direction": "right",
+        "checkInput": true
+      },
+      {
+        "type": "Emotion",
+        "delayBefore": 0.0,
+        "score": 15,
+        "clear": true
+      }
+    ],
+    "만쥬/4": [
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "\"으아아!<delay=0.3f> <shake>만쥬다 만쥬!</shake>\"<delay=0.6f>",
+        "direction": "left",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "요타로가 방 구석으로 달아났습니다.<delay=0.4f>",
+        "direction": "middle",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "친구들이 배를 잡고 웃었습니다.<delay=0.4f>",
+        "direction": "middle",
+        "checkInput": true
+      },
+      {
+        "type": "Emotion",
+        "delayBefore": 0.0,
+        "score": -15,
+        "clear": false
+      }
+    ],
+    "만쥬/5": [
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "요타로는 팥 만쥬를 하나 집어들더니,<delay=0.4f> 한 입 베어 물었습니다.<delay=0.5f>",
+        "direction": "left",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "\"음...<delay=0.6f>\"<delay=0.4f>",
+        "direction": "left",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "친구들이 굳어버렸습니다.<delay=0.5f>",
+        "direction": "middle",
+        "checkInput": true
+      },
+      {
+        "type": "Emotion",
+        "delayBefore": 0.0,
+        "score": 25,
+        "clear": true
+      }
+    ],
+    "만쥬/6": [
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "요타로는 아무 말 없이,<delay=0.4f> 만쥬를 하나씩 바라봤습니다.<delay=0.5f>",
+        "direction": "left",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "팥 만쥬,<delay=0.2f> 깨 만쥬,<delay=0.2f> 밤 만쥬...<delay=0.6f>",
+        "direction": "left",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "친구들은 요타로의 표정을 읽을 수가 없었습니다.<delay=0.5f>",
+        "direction": "middle",
+        "checkInput": true
+      },
+      {
+        "type": "Emotion",
+        "delayBefore": 0.0,
+        "score": 5,
+        "clear": true
+      }
+    ],
+
+    "만쥬/ending1": [
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "요타로는 만쥬를 하나씩,<delay=0.3f> 둘씩,<delay=0.3f> 차례로 집어 먹기 시작했습니다.<delay=0.6f>",
+        "direction": "middle",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "팥 만쥬,<delay=0.2f> 깨 만쥬,<delay=0.2f> 밤 만쥬,<delay=0.2f> 콩 만쥬.<delay=0.5f>",
+        "direction": "left",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "친구들이 넋을 잃고 바라봤습니다.<delay=0.5f>",
+        "direction": "middle",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "\"야.<delay=0.4f> 너 만쥬 무섭다고 하지 않았어?\"<delay=0.5f>",
+        "direction": "right",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "요타로가 마지막 만쥬를 다 먹고 입을 닦으며 말했습니다.<delay=0.5f>",
+        "direction": "middle",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "\"아,<delay=0.3f> 만쥬는 다 먹었으니까 이제 됐고.<delay=0.5f> 근데 지금은...<delay=0.8f> <shake>따뜻한 차 한 잔이 무섭네.</shake>\"<delay=1.0f>",
+        "direction": "left",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "<speed=0.6f>친구들은 그제야 알았습니다.<delay=0.6f> 처음부터 만쥬가 목적이었다는 것을.</speed>",
+        "direction": "middle",
+        "checkInput": true
+      }
+    ],
+
+    "만쥬/ending2": [
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "요타로가 만쥬를 다 먹는 것을 지켜본 친구 하나가 말했습니다.<delay=0.5f>",
+        "direction": "middle",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "\"나는... 사실 떡이 제일 무서워.\"<delay=0.8f>",
+        "direction": "right",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "또 다른 친구가 말했습니다.<delay=0.3f>",
+        "direction": "middle",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "\"나는 약과.<delay=0.4f> 보면 온몸이 굳는다고.\"<delay=0.6f>",
+        "direction": "left",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "요타로가 입을 닦으며 일어났습니다.<delay=0.4f>",
+        "direction": "middle",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "\"그래.<delay=0.5f> 다들 무서운 거 생겼구나.<delay=0.4f> 나는 이만 먼저 가볼게.\"<delay=0.8f>",
+        "direction": "left",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "<speed=0.6f>그날 이후 장터 떡집과 약과집 매출이 올랐다고 합니다.<delay=0.5f> 이유는 알 수 없습니다.</speed>",
+        "direction": "middle",
+        "checkInput": true
+      }
+    ],
+
+    "만쥬/ending3": [
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "요타로가 만쥬를 하나씩 먹고 있는데,<delay=0.4f> 구석에서 지켜보던 친구가 말했습니다.<delay=0.5f>",
+        "direction": "middle",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "\"야.<delay=0.4f> 너 오늘 아침에 장터에서 만쥬 사먹는 거 봤다.\"<delay=0.8f>",
+        "direction": "right",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "요타로의 손이 멈췄습니다.<delay=0.8f>",
+        "direction": "middle",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "\"그건...<delay=0.6f> 무서움을 극복하려고.\"<delay=0.8f>",
+        "direction": "left",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "\"세 개나?\"<delay=0.8f>",
+        "direction": "right",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "요타로는 남은 만쥬를 내려다봤습니다.<delay=0.5f>",
+        "direction": "left",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "\"...시가타가나이.\"<delay=1.0f>",
+        "direction": "left",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "<speed=0.6f>들킨 것보다,<delay=0.5f> 만쥬가 남은 게 더 아까웠습니다.</speed>",
+        "direction": "middle",
+        "checkInput": true
+      }
+    ],
+
+    "만쥬/ending4": [
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "요타로는 만쥬를 보자마자 얼굴이 하얘졌습니다.<delay=0.5f>",
+        "direction": "middle",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "\"저,<delay=0.3f> 저거 치워.<delay=0.4f> <shake>제발 치워줘.</shake>\"<delay=0.8f>",
+        "direction": "left",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "친구들이 당황했습니다.<delay=0.4f>",
+        "direction": "middle",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "\"어,<delay=0.3f> 진짜야?\"<delay=0.5f>",
+        "direction": "right",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "요타로가 눈을 꼭 감고 말했습니다.<delay=0.4f>",
+        "direction": "middle",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "\"어릴 때 만쥬를 너무 많이 먹어서 탈이 난 적이 있어.<delay=0.5f> 그 뒤로 냄새만 맡아도 속이 뒤집혀.\"<delay=0.8f>",
+        "direction": "left",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "친구들은 만쥬를 황급히 치웠습니다.<delay=0.5f>",
+        "direction": "middle",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "\"미안,<delay=0.3f> 진짜인 줄 몰랐어.\"<delay=0.5f>",
+        "direction": "right",
+        "checkInput": true
+      },
+      {
+        "type": "Dial",
+        "delayBefore": 0.0,
+        "text": "<speed=0.6f>세상에 꾀로 만든 거짓말보다,<delay=0.5f> 진심에서 나온 무서움이 더 무서운 법입니다.</speed>",
+        "direction": "middle",
+        "checkInput": true
+      }
+    ]
+  }
+}
